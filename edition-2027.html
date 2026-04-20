@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Édition 2027 — Valora</title>
+<link rel="stylesheet" href="assets/valora.css?v=3" />
+<style>
+  /* Page header */
+  .page-head {
+    padding: 56px 0 0;
+    background: var(--sable);
+    border-bottom: 1px solid var(--line);
+  }
+  .page-head .crumb {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cuivre); margin-bottom: 24px;
+  }
+  .page-head h1 {
+    font-size: clamp(64px, 10vw, 160px);
+    font-weight: 300; line-height: .9;
+    letter-spacing: -0.035em;
+    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    margin-bottom: 40px;
+  }
+  .page-head h1 em { font-style: italic; color: var(--cuivre); }
+  .page-head h1 .year { color: var(--cuivre); font-style: normal; }
+  .head-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; border-top: 1px solid var(--line);
+    margin-top: 32px;
+  }
+  .head-meta > div {
+    padding: 28px 20px 28px 0;
+    border-right: 1px solid var(--line);
+  }
+  .head-meta > div:last-child { border-right: none; }
+  .head-meta .k {
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cuivre); margin-bottom: 10px;
+  }
+  .head-meta .v {
+    font-family: var(--ff-serif);
+    font-size: clamp(18px, 1.5vw, 24px);
+    line-height: 1.2;
+    font-weight: 400;
+  }
+  .head-meta .v em { font-style: italic; color: var(--cuivre); }
+
+  /* Plan interactif */
+  .plan-section {
+    padding: clamp(80px, 10vw, 140px) 0;
+    background: var(--sable);
+  }
+  .plan-head {
+    display: flex; justify-content: space-between; align-items: end;
+    gap: 32px; flex-wrap: wrap; margin-bottom: 48px;
+  }
+  .plan-head h2 {
+    font-size: clamp(40px, 5vw, 80px); font-weight: 300;
+    line-height: .98; letter-spacing: -0.03em;
+  }
+  .plan-head h2 em { font-style: italic; color: var(--cuivre); }
+  .plan-head .note {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--cuivre); max-width: 28ch; text-align: right;
+  }
+
+  .plan-wrap {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 32px;
+  }
+  .plan-svg-wrap {
+    background: var(--ivoire);
+    border: 1px solid var(--line);
+    aspect-ratio: 4 / 3;
+    position: relative;
+    overflow: hidden;
+  }
+  .plan-svg {
+    width: 100%; height: 100%; display: block;
+  }
+  .plan-detail {
+    background: var(--canopee);
+    color: var(--ivoire);
+    padding: 32px;
+    min-height: 100%;
+    display: flex; flex-direction: column;
+  }
+  .plan-detail .eyebrow {
+    color: var(--lime);
+  }
+  .plan-detail .eyebrow .bar { background: var(--lime); }
+  .plan-detail h3 {
+    font-family: var(--ff-serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 16px 0 20px;
+  }
+  .plan-detail h3 em { font-style: italic; color: var(--lime); }
+  .plan-detail .num-big {
+    font-family: var(--ff-serif);
+    font-size: 80px; font-weight: 300; line-height: .9;
+    margin-bottom: 16px; color: var(--lime);
+    font-variation-settings: 'opsz' 144;
+  }
+  .plan-detail p {
+    font-size: 14px; line-height: 1.6;
+    opacity: .85;
+    margin-bottom: 20px;
+  }
+  .plan-detail .kv {
+    border-top: 1px solid var(--line-dark);
+    padding: 14px 0;
+    display: grid; grid-template-columns: 1fr 1fr;
+    font-size: 13px;
+    gap: 12px;
+  }
+  .plan-detail .kv dt {
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    opacity: .6;
+  }
+  .plan-detail .kv dd { font-family: var(--ff-serif); font-size: 15px; }
+
+  /* SVG interactions */
+  .pole-zone { transition: all .25s; cursor: pointer; }
+  .pole-zone rect, .pole-zone path { transition: all .25s; }
+  .pole-zone:hover .zone-rect, .pole-zone.active .zone-rect {
+    fill: var(--cuivre); stroke: var(--cuivre);
+  }
+  .pole-zone:hover .zone-label,
+  .pole-zone.active .zone-label { fill: var(--ivoire); }
+  .pole-zone:hover .zone-num,
+  .pole-zone.active .zone-num { fill: var(--lime); }
+
+  @media (max-width: 900px) {
+    .plan-wrap { grid-template-columns: 1fr; }
+    .head-meta { grid-template-columns: 1fr 1fr; }
+    .head-meta > div { border-right: none; border-bottom: 1px solid var(--line); }
+  }
+
+  /* Programme */
+  .prog-section {
+    padding: clamp(80px, 10vw, 140px) 0;
+    background: var(--ivoire);
+  }
+  .prog-head {
+    display: flex; justify-content: space-between; align-items: end;
+    gap: 24px; flex-wrap: wrap; margin-bottom: 40px;
+  }
+  .prog-head h2 {
+    font-size: clamp(40px, 5vw, 80px); font-weight: 300;
+    letter-spacing: -0.03em; line-height: .98;
+  }
+  .prog-head h2 em { font-style: italic; color: var(--cuivre); }
+
+  .filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .chip {
+    padding: 8px 16px; border-radius: 999px;
+    border: 1px solid var(--line);
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    background: var(--sable);
+    transition: all .2s;
+  }
+  .chip:hover { border-color: var(--encre); }
+  .chip.on { background: var(--encre); color: var(--ivoire); border-color: var(--encre); }
+  .chip.on.conf { background: var(--canopee); color: var(--lime); border-color: var(--canopee); }
+  .chip.on.atelier { background: var(--cuivre); color: var(--ivoire); border-color: var(--cuivre); }
+  .chip.on.demo { background: var(--lime); color: var(--encre); border-color: var(--lime); }
+
+  .day-header {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 32px 0 16px;
+    border-top: 2px solid var(--encre);
+    margin-top: 24px;
+  }
+  .day-header .d-num {
+    font-family: var(--ff-serif);
+    font-size: clamp(48px, 6vw, 96px);
+    font-weight: 300; line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .day-header .d-num em { font-style: italic; color: var(--cuivre); }
+  .day-header .d-label {
+    font-family: var(--ff-mono); font-size: 12px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+  }
+
+  .slot {
+    display: grid;
+    grid-template-columns: 90px 90px 1fr auto auto;
+    gap: 24px; align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+    cursor: pointer; transition: all .2s;
+  }
+  .slot:hover { padding-left: 12px; background: rgba(184,86,58,.03); }
+  .slot-time {
+    font-family: var(--ff-mono); font-size: 14px;
+  }
+  .slot-pole {
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--cuivre);
+  }
+  .slot-title {
+    font-family: var(--ff-serif);
+    font-size: clamp(18px, 1.5vw, 24px);
+    font-weight: 400; letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .slot-title em { font-style: italic; color: var(--cuivre); }
+  .slot-speaker {
+    font-family: var(--ff-mono); font-size: 11px;
+    opacity: .6; letter-spacing: 0.04em;
+    text-align: right;
+    max-width: 160px;
+  }
+  .slot-tag {
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px;
+  }
+  .slot-tag.conf { background: var(--canopee); color: var(--lime); }
+  .slot-tag.atelier { background: var(--cuivre); color: var(--ivoire); }
+  .slot-tag.demo { background: var(--lime); color: var(--encre); }
+  .slot-tag.job { background: transparent; color: var(--encre); border: 1px solid var(--line); }
+  .slot-tag.keynote { background: var(--encre); color: var(--ivoire); }
+
+  @media (max-width: 900px) {
+    .slot { grid-template-columns: 70px 1fr; }
+    .slot-pole, .slot-speaker, .slot-tag { display: none; }
+  }
+
+  /* Access block */
+  .access {
+    padding: clamp(64px, 8vw, 112px) 0;
+    background: var(--canopee);
+    color: var(--ivoire);
+  }
+  .access-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    align-items: start;
+  }
+  .access h2 {
+    font-size: clamp(40px, 5vw, 72px); font-weight: 300;
+    letter-spacing: -0.03em; line-height: .98; margin-bottom: 24px;
+  }
+  .access h2 em { font-style: italic; color: var(--lime); }
+  .access p { font-family: var(--ff-serif); font-size: 19px; line-height: 1.55; max-width: 44ch; opacity: .88; font-weight: 300; }
+  .access-modes {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    margin-top: 40px;
+    border-top: 1px solid var(--line-dark);
+  }
+  .access-mode {
+    padding: 24px 20px 24px 0;
+    border-right: 1px solid var(--line-dark);
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .access-mode:nth-child(2n) { border-right: none; padding-left: 20px; padding-right: 0;}
+  .access-mode .k { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; opacity: .5; margin-bottom: 6px; }
+  .access-mode .v { font-family: var(--ff-serif); font-size: 18px; line-height: 1.3; }
+  .access-mode .v em { font-style: italic; color: var(--lime); }
+  .map-ph {
+    aspect-ratio: 4/3;
+    background:
+      repeating-linear-gradient(45deg, rgba(212,255,75,.05) 0 12px, transparent 12px 24px),
+      var(--canopee-deep);
+    border: 1px solid var(--line-dark);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--lime);
+    text-align: center;
+  }
+  .map-ph::before {
+    content: ''; position: absolute; inset: 12px;
+    border: 1px dashed rgba(212,255,75,.3);
+  }
+  @media (max-width: 900px) {
+    .access-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body data-screen-label="Édition 2027">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="assets/valora-logo.png" alt="Valora"/><span class="tag">2027</span></a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="edition-2027.html" class="active">Édition 2027</a>
+      <a href="pole.html?id=01">Pôles</a>
+      <a href="caraibe.html">Caraïbe</a>
+      <a href="mag.html">Le Mag</a>
+      <a href="#">À propos</a>
+    </div>
+    <div class="nav-right">
+      <div class="countdown-mini"><span class="dot"></span><span data-countdown="hours">—</span><span style="opacity:.5;">avant Valora</span></div>
+      <div class="lang"><button class="on" data-lang="FR">FR</button><button data-lang="EN">EN</button></div>
+      <a href="pre-inscription.html" class="btn-rose">Pré-inscription →</a>
+    </div>
+  </div>
+</nav>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumb">Accueil · Édition 2027</div>
+    <h1>L'édition<br/><em>2027</em>, en détail.</h1>
+    <div class="head-meta">
+      <div><div class="k">Dates</div><div class="v">Jeudi 13 + vendredi 14 <em>mai 2027</em></div></div>
+      <div><div class="k">Lieu</div><div class="v">Hippodrome de <em>Carrère</em><br/>Le Lamentin</div></div>
+      <div><div class="k">Horaires</div><div class="v">09h00 → 19h00<br/><span style="opacity:.55; font-size:14px;">Nocturne jeudi jusqu'à 22h</span></div></div>
+      <div><div class="k">Entrée</div><div class="v"><em>Gratuite</em><br/>Pré-inscription recommandée</div></div>
+    </div>
+    <div style="height:48px;"></div>
+  </div>
+</section>
+
+<!-- PLAN INTERACTIF -->
+<section class="plan-section">
+  <div class="wrap">
+    <div class="plan-head">
+      <div>
+        <div class="eyebrow"><span class="bar"></span>Plan du village · Édition 2027</div>
+        <h2 style="margin-top:16px;">Douze pôles,<br/><em>un parcours.</em></h2>
+      </div>
+      <div class="note">● Plan provisoire 04/2026<br/>Mise à jour finale janv. 2027</div>
+    </div>
+
+    <div class="plan-wrap">
+      <div class="plan-svg-wrap">
+        <svg class="plan-svg" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+          <!-- background grid -->
+          <defs>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(17,17,17,.04)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="600" fill="url(#grid)"/>
+
+          <!-- Hippodrome oval -->
+          <ellipse cx="400" cy="300" rx="360" ry="240" fill="none" stroke="rgba(14,59,46,.25)" stroke-width="2" stroke-dasharray="6 4"/>
+          <ellipse cx="400" cy="300" rx="300" ry="200" fill="rgba(244,239,230,.6)" stroke="rgba(14,59,46,.3)" stroke-width="1"/>
+
+          <!-- North label -->
+          <text x="400" y="40" text-anchor="middle" font-family="JetBrains Mono" font-size="10" letter-spacing="3" fill="#B8563A">NORD · ACCUEIL</text>
+          <!-- Compass -->
+          <g transform="translate(740,50)" opacity=".55">
+            <circle cx="0" cy="0" r="18" fill="none" stroke="#0E3B2E"/>
+            <path d="M 0 -14 L 4 0 L 0 4 L -4 0 Z" fill="#B8563A"/>
+            <text x="0" y="-22" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#0E3B2E">N</text>
+          </g>
+
+          <!-- Entrance -->
+          <g transform="translate(390,80)">
+            <rect x="0" y="0" width="20" height="20" fill="#D4FF4B" stroke="#0E3B2E" stroke-width="1"/>
+            <text x="10" y="14" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#0E3B2E">E</text>
+            <text x="10" y="40" text-anchor="middle" font-family="JetBrains Mono" font-size="8" letter-spacing="1.5" fill="#0E3B2E">ENTRÉE</text>
+          </g>
+
+          <!-- Pole zones - arranged around the oval -->
+          <!-- Row top-left -->
+          <g class="pole-zone" data-pole="1" data-name="Eau & Air" data-surface="320 m²" data-expo="9">
+            <rect class="zone-rect" x="150" y="130" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="160" y="148" font-family="JetBrains Mono" font-size="10" fill="#B8563A">01</text>
+            <text class="zone-label" x="195" y="172" text-anchor="middle" font-family="Fraunces" font-size="14" fill="#0E3B2E">Eau & Air</text>
+          </g>
+          <g class="pole-zone" data-pole="2" data-name="Énergie" data-surface="280 m²" data-expo="7">
+            <rect class="zone-rect" x="260" y="130" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="270" y="148" font-family="JetBrains Mono" font-size="10" fill="#B8563A">02</text>
+            <text class="zone-label" x="305" y="172" text-anchor="middle" font-family="Fraunces" font-size="14" fill="#0E3B2E">Énergie</text>
+          </g>
+          <g class="pole-zone" data-pole="3" data-name="Biodiversité" data-surface="340 m²" data-expo="8">
+            <rect class="zone-rect" x="450" y="130" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="460" y="148" font-family="JetBrains Mono" font-size="10" fill="#B8563A">03</text>
+            <text class="zone-label" x="495" y="172" text-anchor="middle" font-family="Fraunces" font-size="14" fill="#0E3B2E">Biodiv.</text>
+          </g>
+          <g class="pole-zone" data-pole="4" data-name="Agriculture durable" data-surface="360 m²" data-expo="10">
+            <rect class="zone-rect" x="560" y="130" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="570" y="148" font-family="JetBrains Mono" font-size="10" fill="#B8563A">04</text>
+            <text class="zone-label" x="605" y="172" text-anchor="middle" font-family="Fraunces" font-size="14" fill="#0E3B2E">Agriculture</text>
+          </g>
+
+          <!-- middle-left -->
+          <g class="pole-zone" data-pole="5" data-name="Patrimoine durable" data-surface="240 m²" data-expo="6">
+            <rect class="zone-rect" x="110" y="240" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="120" y="258" font-family="JetBrains Mono" font-size="10" fill="#B8563A">05</text>
+            <text class="zone-label" x="155" y="282" text-anchor="middle" font-family="Fraunces" font-size="14" fill="#0E3B2E">Patrimoine</text>
+          </g>
+          <g class="pole-zone" data-pole="6" data-name="Mobilité" data-surface="310 m²" data-expo="8">
+            <rect class="zone-rect" x="600" y="240" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="610" y="258" font-family="JetBrains Mono" font-size="10" fill="#B8563A">06</text>
+            <text class="zone-label" x="645" y="282" text-anchor="middle" font-family="Fraunces" font-size="14" fill="#0E3B2E">Mobilité</text>
+          </g>
+
+          <!-- Centre — scène principale -->
+          <rect x="330" y="260" width="140" height="80" fill="#0E3B2E" stroke="#D4FF4B" stroke-width="1"/>
+          <text x="400" y="295" text-anchor="middle" font-family="Fraunces" font-size="16" font-style="italic" fill="#D4FF4B">Scène</text>
+          <text x="400" y="315" text-anchor="middle" font-family="Fraunces" font-size="16" font-style="italic" fill="#D4FF4B">centrale</text>
+
+          <!-- middle-row: deux côtés -->
+          <g class="pole-zone" data-pole="7" data-name="Déchets" data-surface="260 m²" data-expo="5">
+            <rect class="zone-rect" x="110" y="330" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="120" y="348" font-family="JetBrains Mono" font-size="10" fill="#B8563A">07</text>
+            <text class="zone-label" x="155" y="372" text-anchor="middle" font-family="Fraunces" font-size="14" fill="#0E3B2E">Déchets</text>
+          </g>
+          <g class="pole-zone" data-pole="8" data-name="Tourisme durable" data-surface="280 m²" data-expo="7">
+            <rect class="zone-rect" x="600" y="330" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="610" y="348" font-family="JetBrains Mono" font-size="10" fill="#B8563A">08</text>
+            <text class="zone-label" x="645" y="372" text-anchor="middle" font-family="Fraunces" font-size="14" fill="#0E3B2E">Tourisme</text>
+          </g>
+
+          <!-- bottom row -->
+          <g class="pole-zone" data-pole="9" data-name="Risques & sargasses" data-surface="300 m²" data-expo="6">
+            <rect class="zone-rect" x="150" y="420" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="160" y="438" font-family="JetBrains Mono" font-size="10" fill="#B8563A">09</text>
+            <text class="zone-label" x="195" y="462" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#0E3B2E">Sargasses</text>
+          </g>
+          <g class="pole-zone" data-pole="10" data-name="Économie circulaire" data-surface="340 m²" data-expo="11">
+            <rect class="zone-rect" x="260" y="420" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="270" y="438" font-family="JetBrains Mono" font-size="10" fill="#B8563A">10</text>
+            <text class="zone-label" x="305" y="462" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#0E3B2E">Éco. circ.</text>
+          </g>
+          <g class="pole-zone" data-pole="11" data-name="Éducation & formation" data-surface="220 m²" data-expo="5">
+            <rect class="zone-rect" x="450" y="420" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="460" y="438" font-family="JetBrains Mono" font-size="10" fill="#B8563A">11</text>
+            <text class="zone-label" x="495" y="462" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#0E3B2E">Éducation</text>
+          </g>
+          <g class="pole-zone" data-pole="12" data-name="Climat" data-surface="260 m²" data-expo="6">
+            <rect class="zone-rect" x="560" y="420" width="90" height="70" fill="#FFFDF8" stroke="#0E3B2E"/>
+            <text class="zone-num" x="570" y="438" font-family="JetBrains Mono" font-size="10" fill="#B8563A">12</text>
+            <text class="zone-label" x="605" y="462" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#0E3B2E">Climat</text>
+          </g>
+
+          <!-- Pavillon Caraïbe -->
+          <g class="pole-zone" data-pole="c" data-name="Pavillon Caraïbe" data-surface="480 m²" data-expo="19">
+            <rect class="zone-rect" x="310" y="520" width="180" height="50" fill="#B8563A" stroke="#0E3B2E"/>
+            <text class="zone-label" x="400" y="551" text-anchor="middle" font-family="Fraunces" font-size="15" font-style="italic" fill="#FFFDF8">Pavillon Caraïbe</text>
+          </g>
+
+          <!-- Zone food & bar -->
+          <g opacity=".7">
+            <rect x="110" y="510" width="70" height="40" fill="none" stroke="#0E3B2E" stroke-dasharray="3 2"/>
+            <text x="145" y="534" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#0E3B2E">FOOD</text>
+          </g>
+          <g opacity=".7">
+            <rect x="620" y="510" width="70" height="40" fill="none" stroke="#0E3B2E" stroke-dasharray="3 2"/>
+            <text x="655" y="534" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#0E3B2E">PRESSE</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="plan-detail" id="planDetail">
+        <div class="eyebrow"><span class="bar"></span>Sélectionnez un pôle</div>
+        <h3>Cliquez sur<br/>un <em>pôle</em> du plan.</h3>
+        <p style="opacity:.8;">Chaque zone cliquable ouvre sa fiche détaillée : exposants présents, surface allouée, conférences rattachées, et le programme heure par heure du pôle.</p>
+        <dl class="kv">
+          <dt>Total surface</dt><dd>4 200 m²</dd>
+          <dt>Exposants</dt><dd>80+</dd>
+          <dt>Scène</dt><dd>centrale</dd>
+          <dt>Pavillon</dt><dd>Caraïbe</dd>
+        </dl>
+        <div style="margin-top:auto; padding-top:24px; font-family:var(--ff-mono); font-size:10px; letter-spacing:.14em; opacity:.5;">Astuce · survolez un pôle →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section class="prog-section" id="programme">
+  <div class="wrap">
+    <div class="prog-head">
+      <div>
+        <div class="eyebrow"><span class="bar"></span>Programme des deux journées</div>
+        <h2 style="margin-top:16px;">Programme<br/><em>détaillé.</em></h2>
+      </div>
+      <div>
+        <a href="#" class="btn-primary">Télécharger le PDF →</a>
+      </div>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="chip on" data-filter="all">Tout</button>
+      <button class="chip conf" data-filter="conf">Conférences</button>
+      <button class="chip atelier" data-filter="atelier">Ateliers</button>
+      <button class="chip demo" data-filter="demo">Démos</button>
+      <button class="chip" data-filter="job">Job-dating</button>
+      <button class="chip" data-filter="keynote">Keynotes</button>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="day-header">
+      <div class="d-num"><em>13.</em> mai</div>
+      <div class="d-label">JEUDI · JOUR 1 · 42 RENDEZ-VOUS</div>
+    </div>
+
+    <div class="slot" data-type="keynote">
+      <div class="slot-time">09:30</div>
+      <div class="slot-pole">Scène centrale</div>
+      <div class="slot-title">Ouverture officielle · <em>un archipel qui transitionne</em></div>
+      <div class="slot-speaker">Philippe Pied<br/>Prés. 3ED</div>
+      <div><span class="slot-tag keynote">Keynote</span></div>
+    </div>
+    <div class="slot" data-type="conf">
+      <div class="slot-time">11:00</div>
+      <div class="slot-pole">Pôle 09 · Sargasses</div>
+      <div class="slot-title">Sargasses — <em>de la nuisance à la ressource</em>. Table ronde caribéenne</div>
+      <div class="slot-speaker">Délég. Barbade<br/>+ IFREMER</div>
+      <div><span class="slot-tag conf">Conférence</span></div>
+    </div>
+    <div class="slot" data-type="atelier">
+      <div class="slot-time">14:00</div>
+      <div class="slot-pole">Pôle 07 · Déchets</div>
+      <div class="slot-title">Atelier — fabriquer son composteur domestique à partir de palettes</div>
+      <div class="slot-speaker">Compostri<br/>Martinique</div>
+      <div><span class="slot-tag atelier">Atelier</span></div>
+    </div>
+    <div class="slot" data-type="demo">
+      <div class="slot-time">16:00</div>
+      <div class="slot-pole">Pôle 06 · Mobilité</div>
+      <div class="slot-title">Démo — véhicule <em>solaire autonome</em>, prototype Martinique/Barbade</div>
+      <div class="slot-speaker">Solar Caribbean<br/>& UAG</div>
+      <div><span class="slot-tag demo">Démo</span></div>
+    </div>
+    <div class="slot" data-type="conf">
+      <div class="slot-time">17:30</div>
+      <div class="slot-pole">Pôle 01 · Eau</div>
+      <div class="slot-title">Eau potable en 2030 : <em>où en sommes-nous ?</em></div>
+      <div class="slot-speaker">ODE · Madininair</div>
+      <div><span class="slot-tag conf">Conférence</span></div>
+    </div>
+    <div class="slot" data-type="keynote">
+      <div class="slot-time">19:30</div>
+      <div class="slot-pole">Scène centrale</div>
+      <div class="slot-title">Soirée <em>d'honneur</em> — accueil des délégations caribéennes</div>
+      <div class="slot-speaker">Nocturne<br/>jusqu'à 22h</div>
+      <div><span class="slot-tag keynote">Keynote</span></div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-header">
+      <div class="d-num"><em>14.</em> mai</div>
+      <div class="d-label">VENDREDI · JOUR 2 · 38 RENDEZ-VOUS</div>
+    </div>
+
+    <div class="slot" data-type="job">
+      <div class="slot-time">10:00</div>
+      <div class="slot-pole">Pôle 11 · Formation</div>
+      <div class="slot-title">Job-dating — <em>120 emplois verts</em> à pourvoir cette année</div>
+      <div class="slot-speaker">Pôle Emploi<br/>+ 40 entreprises</div>
+      <div><span class="slot-tag job">Job-dating</span></div>
+    </div>
+    <div class="slot" data-type="atelier">
+      <div class="slot-time">10:30</div>
+      <div class="slot-pole">Pôle 04 · Agriculture</div>
+      <div class="slot-title">Atelier — connaître et cultiver les plantes médicinales créoles</div>
+      <div class="slot-speaker">Jardin de Balata</div>
+      <div><span class="slot-tag atelier">Atelier</span></div>
+    </div>
+    <div class="slot" data-type="conf">
+      <div class="slot-time">11:30</div>
+      <div class="slot-pole">Pôle 08 · Tourisme</div>
+      <div class="slot-title">Un tourisme qui <em>respecte</em> : quelle Martinique en 2030 ?</div>
+      <div class="slot-speaker">CMT · Airbnb</div>
+      <div><span class="slot-tag conf">Conférence</span></div>
+    </div>
+    <div class="slot" data-type="demo">
+      <div class="slot-time">13:30</div>
+      <div class="slot-pole">Pôle 02 · Énergie</div>
+      <div class="slot-title">Démo — panneaux bifaciaux pour toits antillais en zone cyclonique</div>
+      <div class="slot-speaker">EDF Archipel</div>
+      <div><span class="slot-tag demo">Démo</span></div>
+    </div>
+    <div class="slot" data-type="keynote">
+      <div class="slot-time">14:30</div>
+      <div class="slot-pole">Scène centrale</div>
+      <div class="slot-title">Clôture — <em>feuille de route OECS-Martinique</em> 2027-2030</div>
+      <div class="slot-speaker">CTM · OECS</div>
+      <div><span class="slot-tag keynote">Keynote</span></div>
+    </div>
+    <div class="slot" data-type="atelier">
+      <div class="slot-time">16:00</div>
+      <div class="slot-pole">Pôle 12 · Climat</div>
+      <div class="slot-title">Atelier fresque du climat — version antillaise</div>
+      <div class="slot-speaker">Fresque Climat<br/>Antilles</div>
+      <div><span class="slot-tag atelier">Atelier</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="access">
+  <div class="wrap">
+    <div class="access-grid">
+      <div>
+        <div class="eyebrow" style="color:var(--lime);"><span class="bar" style="background:var(--lime);"></span>Venir au Village</div>
+        <h2 style="margin-top:16px;">Hippodrome de<br/><em>Carrère.</em></h2>
+        <p>À dix minutes de Fort-de-France, parking vaste, desservi par les navettes CAP Nord et Sud renforcées sur les deux journées. Accueil scolaire dédié du côté Est (Pôle 11).</p>
+        <div class="access-modes">
+          <div class="access-mode"><div class="k">Voiture</div><div class="v">Sortie <em>Carrère</em><br/>1 200 places gratuites</div></div>
+          <div class="access-mode"><div class="k">Navettes</div><div class="v">Départs <em>Fort-de-France</em><br/>Aéroport · Schoelcher</div></div>
+          <div class="access-mode"><div class="k">Vélo</div><div class="v">Piste <em>Rivière-Salée</em> rallongée 2026<br/>200 arceaux</div></div>
+          <div class="access-mode"><div class="k">Scolaires</div><div class="v">Bus dédiés<br/><em>sur réservation</em></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="map-ph">Carte interactive<br/>Hippodrome · Le Lamentin</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="serif">Valora 2027.<br/><em style="color:var(--lime); font-style:italic;">À l'hippodrome.</em></div>
+        <p style="opacity:.7; font-size:14px; max-width:36ch;">4ᵉ Village du développement durable de Martinique. 13 + 14 mai 2027, Hippodrome de Carrère.</p>
+      </div>
+      <div><h4>Le Village</h4>
+        <ul><li><a href="edition-2027.html">Édition 2027</a></li><li><a href="#">Les 12 pôles</a></li><li><a href="caraibe.html">Caraïbe</a></li><li><a href="#">Éditions passées</a></li><li><a href="#">Exposer</a></li><li><a href="#">Scolaires</a></li></ul>
+      </div>
+      <div><h4>En continu</h4>
+        <ul><li><a href="mag.html">Le Mag</a></li><li><a href="#">Bulletin Valora</a></li><li><a href="#">Podcast</a></li><li><a href="#">Presse</a></li><li><a href="#">martinique2050.com</a></li></ul>
+      </div>
+      <div><h4>Contact</h4>
+        <ul><li>Association 3ED</li><li>Philippe Pied · fondateur</li><li><a href="mailto:bonjour@valora.mq">bonjour@valora.mq</a></li><li>+596 696 00 00 00</li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2016–2027 Association 3ED · Fort-de-France · Martinique</span>
+      <span>Mentions légales · Confidentialité · Hébergement</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/valora-shared.js"></script>
+<script>
+// Plan zones interaction
+const detail = document.getElementById('planDetail');
+const descriptions = {
+  1: "Qualité de l'air, gestion de l'eau, brumes de sable, Sargasses dans l'air : le pôle qui attire le plus de familles.",
+  2: "Solaire, éolien offshore, hydrogène, stockage — toutes les énergies bas carbone déployables en zone tropicale.",
+  3: "Mangroves, récifs, forêt sèche. Avec les conservatoires du littoral et le PNRM.",
+  4: "Agroforesterie, circuits courts, AMAP. Dégustations en continu sur deux jours.",
+  5: "Restauration du bâti vernaculaire, matériaux bio-sourcés, case créole du XXIᵉ siècle.",
+  6: "Transports en commun, vélo, véhicules électriques et hybrides. Essais sur piste dédiée.",
+  7: "Zéro déchet, réparation, ressourceries, compost. Le pôle le plus fréquenté en 2023.",
+  8: "Hôtellerie responsable, écolodges, plongée durable, observation baleines.",
+  9: "Préparation cyclones, séismes, tsunamis, gestion Sargasses. Démos protection civile.",
+  10: "ESS, monnaies locales, crédit coopératif, recycleries — coordonné avec Ozanam.",
+  11: "Kits pédagogiques, formations, reconversion. Plus de 15 organismes présents.",
+  12: "Vulgarisation GIEC, trajectoires 1.5°, solutions d'adaptation caribéennes.",
+  c: "Les délégations de Barbade, Sainte-Lucie et Dominique réunies dans un pavillon unique. Programmation bilingue FR/EN."
+};
+document.querySelectorAll('.pole-zone').forEach(zone => {
+  zone.addEventListener('mouseenter', () => show(zone));
+  zone.addEventListener('click', () => show(zone, true));
+});
+function show(zone, lock=false) {
+  document.querySelectorAll('.pole-zone.active').forEach(z => z.classList.remove('active'));
+  if (lock) zone.classList.add('active');
+  const pole = zone.dataset.pole;
+  const name = zone.dataset.name;
+  const num = pole === 'c' ? 'C' : String(pole).padStart(2,'0');
+  detail.innerHTML = `
+    <div class="eyebrow"><span class="bar"></span>Pôle · ${pole === 'c' ? 'Pavillon Caraïbe' : 'N° ' + num}</div>
+    <div class="num-big">${num}</div>
+    <h3>${formatName(name)}</h3>
+    <p>${descriptions[pole]}</p>
+    <dl class="kv">
+      <dt>Surface</dt><dd>${zone.dataset.surface}</dd>
+      <dt>Exposants</dt><dd>${zone.dataset.expo}</dd>
+      <dt>Conférences</dt><dd>${pole==='c'?6:Math.floor(Math.random()*4)+2}</dd>
+      <dt>Ateliers</dt><dd>${pole==='c'?4:Math.floor(Math.random()*3)+1}</dd>
+    </dl>
+    <div style="margin-top:auto; padding-top:24px;">
+      <a href="${pole==='1'?'pole.html?id=01':'#'}" class="btn-lime" style="background:var(--lime); color:var(--encre);">Voir la fiche pôle →</a>
+    </div>
+  `;
+}
+function formatName(n) {
+  return n.replace(/&/g, '<em>&</em>').replace(/([a-z]) ([a-z])/i, (m,a,b) => a + ' <em>' + b).replace(/^(.+) (durable|circulaire|sargasses|formation)$/i, (m,a,b)=>`${a} <em>${b}</em>`);
+}
+
+// Filters
+const filters = document.getElementById('filters');
+filters.addEventListener('click', e => {
+  if (!e.target.matches('.chip')) return;
+  filters.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  e.target.classList.add('on');
+  const f = e.target.dataset.filter;
+  document.querySelectorAll('.slot').forEach(s => {
+    s.style.display = (f === 'all' || s.dataset.type === f) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

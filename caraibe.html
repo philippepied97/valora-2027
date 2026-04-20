@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Caraïbe — Valora 2027</title>
+<link rel="stylesheet" href="assets/valora.css?v=3" />
+<style>
+  .c-hero {
+    background: var(--canopee-deep);
+    color: var(--ivoire);
+    padding: 64px 0 96px;
+    position: relative; overflow: hidden;
+  }
+  .c-hero::before {
+    content: ''; position: absolute; right: -20%; top: -20%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(212,255,75,.08), transparent 60%);
+    pointer-events: none;
+  }
+  .c-hero .crumb {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--lime); margin-bottom: 24px;
+  }
+  .c-hero h1 {
+    font-size: clamp(56px, 10vw, 168px);
+    font-weight: 300; line-height: .88;
+    letter-spacing: -0.035em;
+    margin-bottom: 28px;
+  }
+  .c-hero h1 em { font-style: italic; color: var(--lime); }
+  .c-hero .lead {
+    font-family: var(--ff-serif);
+    font-size: clamp(20px, 1.8vw, 28px);
+    font-style: italic; font-weight: 300;
+    max-width: 48ch; opacity: .9;
+  }
+
+  .c-map {
+    padding: clamp(64px, 8vw, 112px) 0;
+    background: var(--sable);
+  }
+  .c-map h2 {
+    font-size: clamp(36px, 4.5vw, 68px); font-weight: 300;
+    letter-spacing: -0.025em; margin-bottom: 40px; line-height: 1;
+    max-width: 20ch;
+  }
+  .c-map h2 em { font-style: italic; color: var(--cuivre); }
+  .map-wrap {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px;
+    align-items: start;
+  }
+  .island-map {
+    aspect-ratio: 1;
+    background: var(--ivoire);
+    border: 1px solid var(--line);
+    position: relative;
+  }
+  .island-map svg { width: 100%; height: 100%; display: block; }
+  .island {
+    transition: all .25s;
+    cursor: pointer;
+  }
+  .island path { transition: fill .25s; }
+  .island:hover path, .island.on path { fill: var(--cuivre); }
+  .island:hover text, .island.on text { fill: var(--ivoire); font-weight: 500; }
+  .island text { transition: all .25s; }
+  .island.home path { fill: var(--lime); }
+  .island.home text { fill: var(--encre); }
+
+  .delegation-card {
+    background: var(--canopee);
+    color: var(--ivoire);
+    padding: 32px;
+    min-height: 100%;
+  }
+  .delegation-card .eyebrow { color: var(--lime); }
+  .delegation-card .eyebrow .bar { background: var(--lime); }
+  .delegation-card h3 {
+    font-family: var(--ff-serif);
+    font-size: clamp(32px, 3.5vw, 56px);
+    font-weight: 300; line-height: .98;
+    letter-spacing: -0.02em; margin: 20px 0 12px;
+  }
+  .delegation-card h3 em { font-style: italic; color: var(--lime); }
+  .delegation-card .tagline {
+    font-family: var(--ff-serif); font-style: italic;
+    font-size: 18px; opacity: .8; margin-bottom: 24px;
+  }
+  .delegation-card .facts {
+    border-top: 1px solid var(--line-dark);
+    padding-top: 20px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .delegation-card .facts dt {
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    opacity: .55; margin-bottom: 4px;
+  }
+  .delegation-card .facts dd {
+    font-family: var(--ff-serif); font-size: 18px;
+    line-height: 1.2;
+  }
+  .delegation-card .facts dd em { font-style: italic; color: var(--lime); }
+  .delegation-card .focus {
+    margin-top: 24px;
+    padding: 20px;
+    background: rgba(212,255,75,.08);
+    border-left: 2px solid var(--lime);
+    font-family: var(--ff-serif); font-style: italic;
+    font-size: 17px; line-height: 1.5;
+  }
+
+  /* Portraits */
+  .portraits { padding: clamp(64px, 8vw, 112px) 0; background: var(--ivoire); }
+  .portraits h2 {
+    font-size: clamp(36px, 4.5vw, 72px); font-weight: 300;
+    letter-spacing: -0.025em; margin-bottom: 56px; line-height: 1;
+    max-width: 22ch;
+  }
+  .portraits h2 em { font-style: italic; color: var(--cuivre); }
+  .p-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .portrait {
+    display: flex; flex-direction: column;
+  }
+  .portrait .photo {
+    aspect-ratio: 4/5;
+    margin-bottom: 20px;
+  }
+  .portrait .name {
+    font-family: var(--ff-serif);
+    font-size: 24px; font-weight: 400;
+    line-height: 1.1; letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .portrait .name em { font-style: italic; color: var(--cuivre); }
+  .portrait .role {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    opacity: .7;
+  }
+  .portrait .quote {
+    font-family: var(--ff-serif); font-style: italic;
+    font-size: 17px; margin-top: 14px;
+    border-left: 2px solid var(--cuivre);
+    padding-left: 14px;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  /* Bilingual band */
+  .bilingual {
+    padding: clamp(64px, 8vw, 112px) 0;
+    background: var(--sable);
+  }
+  .bi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  .bi-col h2 { font-size: clamp(32px, 4vw, 56px); line-height: 1; font-weight: 300; letter-spacing: -0.025em; margin-bottom: 20px; }
+  .bi-col h2 em { font-style: italic; color: var(--cuivre); }
+  .bi-col .flag-tag {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--cuivre); margin-bottom: 16px;
+  }
+  .bi-col p { font-family: var(--ff-serif); font-size: 18px; line-height: 1.6; max-width: 40ch; }
+  @media (max-width: 900px) {
+    .map-wrap, .p-grid, .bi-grid { grid-template-columns: 1fr; }
+    .p-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body data-screen-label="Caraïbe">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="assets/valora-logo.png" alt="Valora"/><span class="tag">2027</span></a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="edition-2027.html">Édition 2027</a>
+      <a href="pole.html?id=01">Pôles</a>
+      <a href="caraibe.html" class="active">Caraïbe</a>
+      <a href="mag.html">Le Mag</a>
+      <a href="#">À propos</a>
+    </div>
+    <div class="nav-right">
+      <div class="countdown-mini"><span class="dot"></span><span data-countdown="hours">—</span><span style="opacity:.5;">avant Valora</span></div>
+      <div class="lang"><button class="on" data-lang="FR">FR</button><button data-lang="EN">EN</button></div>
+      <a href="pre-inscription.html" class="btn-rose">Pré-inscription →</a>
+    </div>
+  </div>
+</nav>
+
+<section class="c-hero">
+  <div class="wrap">
+    <div class="crumb">Accueil · Caraïbe</div>
+    <h1>Cap<br/><em>Caraïbe</em>,<br/>édition 2027.</h1>
+    <p class="lead">Pour la première fois, Valora ouvre officiellement ses portes aux délégations de la Barbade, de Sainte-Lucie et de la Dominique. Une manière d'assumer ce que nos territoires vivent depuis toujours — des problèmes communs, des solutions qui voyagent mieux entre voisins qu'à travers l'Atlantique.</p>
+  </div>
+</section>
+
+<section class="c-map">
+  <div class="wrap">
+    <div class="eyebrow"><span class="bar"></span>Les délégations invitées</div>
+    <h2 style="margin-top:16px;">Quatre îles,<br/>un <em>même bassin.</em></h2>
+    <div class="map-wrap">
+      <div class="island-map">
+        <svg viewBox="0 0 500 500">
+          <rect width="500" height="500" fill="#E8EEF0"/>
+          <!-- sea pattern -->
+          <g opacity=".15">
+            <path d="M0 100 Q 125 80 250 100 T 500 100" fill="none" stroke="#0E3B2E" stroke-width="1"/>
+            <path d="M0 200 Q 125 180 250 200 T 500 200" fill="none" stroke="#0E3B2E" stroke-width="1"/>
+            <path d="M0 300 Q 125 280 250 300 T 500 300" fill="none" stroke="#0E3B2E" stroke-width="1"/>
+            <path d="M0 400 Q 125 380 250 400 T 500 400" fill="none" stroke="#0E3B2E" stroke-width="1"/>
+          </g>
+          <!-- Caribbean arc labels -->
+          <text x="20" y="30" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="#B8563A">ARC ANTILLAIS · CARAÏBE ORIENTALE</text>
+
+          <!-- Dominique (north) -->
+          <g class="island" data-i="dominique" onclick="pick('dominique')">
+            <path d="M180 120 Q 200 105 220 115 Q 240 130 235 165 Q 225 185 205 180 Q 185 175 178 155 Z" fill="#0E3B2E"/>
+            <text x="250" y="145" font-family="Fraunces" font-style="italic" font-size="18" fill="#0E3B2E">Dominique</text>
+            <text x="250" y="162" font-family="JetBrains Mono" font-size="9" letter-spacing="1.5" fill="#B8563A">ROSEAU · +1 767</text>
+          </g>
+
+          <!-- Martinique (center — home) -->
+          <g class="island home" onclick="pick('martinique')">
+            <path d="M165 225 Q 195 210 225 225 Q 245 245 235 275 Q 225 295 200 300 Q 170 295 160 270 Q 155 245 165 225 Z" fill="#0E3B2E"/>
+            <text x="250" y="255" font-family="Fraunces" font-style="italic" font-size="20" fill="#0E3B2E">Martinique</text>
+            <text x="250" y="274" font-family="JetBrains Mono" font-size="9" letter-spacing="1.5" fill="#B8563A">HÔTE · FORT-DE-FRANCE</text>
+          </g>
+
+          <!-- Sainte-Lucie (south-east) -->
+          <g class="island" data-i="lucie" onclick="pick('lucie')">
+            <path d="M175 340 Q 200 325 220 340 Q 230 360 220 385 Q 195 395 175 385 Q 165 360 175 340 Z" fill="#0E3B2E"/>
+            <text x="245" y="365" font-family="Fraunces" font-style="italic" font-size="18" fill="#0E3B2E">Sainte-Lucie</text>
+            <text x="245" y="383" font-family="JetBrains Mono" font-size="9" letter-spacing="1.5" fill="#B8563A">CASTRIES · +1 758</text>
+          </g>
+
+          <!-- Barbade (far east) -->
+          <g class="island" data-i="barbade" onclick="pick('barbade')">
+            <path d="M390 285 Q 410 275 425 290 Q 430 315 415 325 Q 395 325 385 310 Q 380 295 390 285 Z" fill="#0E3B2E"/>
+            <text x="375" y="265" font-family="Fraunces" font-style="italic" font-size="18" fill="#0E3B2E" text-anchor="end">Barbade →</text>
+            <text x="375" y="283" font-family="JetBrains Mono" font-size="9" letter-spacing="1.5" fill="#B8563A" text-anchor="end">BRIDGETOWN · +1 246</text>
+          </g>
+
+          <!-- connection lines -->
+          <g stroke="#B8563A" stroke-dasharray="4 4" fill="none" opacity=".5">
+            <path d="M205 175 L 200 220"/>
+            <path d="M200 300 L 200 340"/>
+            <path d="M230 255 Q 320 270 390 295"/>
+          </g>
+        </svg>
+      </div>
+      <div class="delegation-card" id="delCard">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="portraits">
+  <div class="wrap">
+    <div class="eyebrow"><span class="bar"></span>Les visages de l'édition 2027</div>
+    <h2 style="margin-top:16px;">Les <em>invités</em><br/>qui portent<br/>la dimension caribéenne.</h2>
+    <div class="p-grid">
+      <div class="portrait">
+        <div class="photo ph">Portrait · Délégué Barbade</div>
+        <div class="name">Sir <em>Dalton</em> Browne</div>
+        <div class="role">Barbade · Ministère de l'Environnement</div>
+        <div class="quote">« Vingt ans de citernes obligatoires : ce qu'on a appris, bon et mauvais, on vient le partager. »</div>
+      </div>
+      <div class="portrait">
+        <div class="photo ph">Portrait · Déléguée Sainte-Lucie</div>
+        <div class="name"><em>Cynthia</em> Charles-Auguste</div>
+        <div class="role">Sainte-Lucie · Water & Sewerage Co.</div>
+        <div class="quote">« La pression variable a fait chuter nos pertes réseau de douze points en deux ans. »</div>
+      </div>
+      <div class="portrait">
+        <div class="photo ph">Portrait · Délégué Dominique</div>
+        <div class="name">Dr <em>Emile</em> Thomas</div>
+        <div class="role">Dominique · Commission Géothermie</div>
+        <div class="quote">« Notre île vise 100 % renouvelables en 2030. Ce n'est pas un slogan, c'est un plan. »</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bilingual">
+  <div class="wrap">
+    <div class="bi-grid">
+      <div class="bi-col">
+        <div class="flag-tag">● Français · FR</div>
+        <h2>Une édition<br/><em>bilingue.</em></h2>
+        <p>Toutes les conférences du Pavillon Caraïbe, la signalétique et la plateforme en ligne sont traduites. Des casques de traduction simultanée sont disponibles sur les deux jours.</p>
+      </div>
+      <div class="bi-col">
+        <div class="flag-tag">● English · EN</div>
+        <h2>A bilingual<br/><em>edition.</em></h2>
+        <p>All Caribbean Pavilion talks, on-site signage and the online platform are translated. Live interpretation headsets are provided throughout both days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="serif">Valora 2027.<br/><em style="color:var(--lime); font-style:italic;">À l'hippodrome.</em></div>
+        <p style="opacity:.7; font-size:14px; max-width:36ch;">4ᵉ Village du développement durable de Martinique.</p>
+      </div>
+      <div><h4>Le Village</h4><ul><li><a href="edition-2027.html">Édition 2027</a></li><li><a href="caraibe.html">Caraïbe</a></li></ul></div>
+      <div><h4>En continu</h4><ul><li><a href="mag.html">Le Mag</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="mailto:bonjour@valora.mq">bonjour@valora.mq</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2016–2027 Association 3ED</span><span>Mentions · Confidentialité</span></div>
+  </div>
+</footer>
+
+<script src="assets/valora-shared.js"></script>
+<script>
+const delegations = {
+  martinique: {
+    tag: 'Île hôte',
+    name: 'Martinique',
+    italic: 'Fort-de-France',
+    tagline: "L'île hôte, carrefour du Village depuis 2016.",
+    facts: { Population: '350 000', Capitale: 'Fort-de-France', Superficie: '1 128 km²', Rôle: 'Hôte' },
+    focus: "Territoire d'accueil et de connexion entre la France hexagonale, la Caraïbe anglophone et l'Amérique du Sud."
+  },
+  barbade: {
+    tag: 'Délégation invitée · 8 exposants',
+    name: 'Barbade',
+    italic: 'Bridgetown',
+    tagline: "Pionnière du solaire thermique dans la Caraïbe.",
+    facts: { Population: '282 000', Capitale: 'Bridgetown', Superficie: '430 km²', Délégués: '12' },
+    focus: "Reconnu comme leader régional sur la gestion de l'eau pluviale et le solaire thermique résidentiel — 70 % des foyers équipés."
+  },
+  lucie: {
+    tag: 'Délégation invitée · 6 exposants',
+    name: 'Sainte-Lucie',
+    italic: 'Castries',
+    tagline: "Réseau d'eau intelligent, mobilité bas carbone.",
+    facts: { Population: '180 000', Capitale: 'Castries', Superficie: '616 km²', Délégués: '9' },
+    focus: "La Water & Sewerage Co. a réduit ses pertes de 28 à 16 % en deux ans grâce à la sectorisation en pression variable."
+  },
+  dominique: {
+    tag: 'Délégation invitée · 5 exposants',
+    name: 'Dominique',
+    italic: 'Roseau',
+    tagline: "Objectif 100 % renouvelables en 2030.",
+    facts: { Population: '72 000', Capitale: 'Roseau', Superficie: '750 km²', Délégués: '7' },
+    focus: "La géothermie couvre déjà 3 % du mix, passera à 40 % d'ici 2028 avec la centrale de Laudat — un modèle observé de près par ses voisins."
+  }
+};
+function pick(key) {
+  document.querySelectorAll('.island.on').forEach(i => i.classList.remove('on'));
+  const zone = document.querySelector(`.island[data-i="${key}"]`) || document.querySelector('.island.home');
+  zone && zone.classList.add('on');
+  const d = delegations[key];
+  document.getElementById('delCard').innerHTML = `
+    <div class="eyebrow"><span class="bar"></span>${d.tag}</div>
+    <h3>${d.name}<br/><em>${d.italic}</em></h3>
+    <div class="tagline">« ${d.tagline} »</div>
+    <dl class="facts">
+      ${Object.entries(d.facts).map(([k,v]) => `<div><dt>${k}</dt><dd>${v.replace(/([0-9]+ %)/, '<em>$1</em>')}</dd></div>`).join('')}
+    </dl>
+    <div class="focus">${d.focus}</div>
+  `;
+}
+pick('barbade');
+</script>
+</body>
+</html>

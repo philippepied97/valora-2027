@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pôle — Valora 2027</title>
+<link rel="stylesheet" href="assets/valora.css?v=3" />
+<style>
+  .pole-hero {
+    background: var(--canopee);
+    color: var(--ivoire);
+    padding: 56px 0 80px;
+    position: relative; overflow: hidden;
+  }
+  .pole-hero .crumb {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--vert); opacity: .9; margin-bottom: 24px;
+  }
+  .pole-hero-grid { display: grid; grid-template-columns: 120px 1fr; gap: 40px; align-items: start; }
+  .pole-big {
+    font-family: var(--ff-serif);
+    font-size: 120px; font-weight: 300; line-height: .9;
+    color: var(--vert); letter-spacing: -0.04em;
+    font-variation-settings: 'opsz' 144;
+  }
+  .pole-hero h1 {
+    font-size: clamp(56px, 9vw, 140px);
+    font-weight: 300; line-height: .92;
+    letter-spacing: -0.035em; margin-bottom: 24px;
+  }
+  .pole-hero h1 em { font-style: italic; color: var(--vert); }
+  .pole-hero .lead {
+    font-family: var(--ff-serif);
+    font-size: clamp(20px, 1.8vw, 28px);
+    font-style: italic; max-width: 44ch;
+    opacity: .95; font-weight: 300;
+  }
+  .pole-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    margin-top: 48px; border-top: 1px solid var(--line-dark);
+  }
+  .pole-meta > div {
+    padding: 24px 20px 0 0;
+    border-right: 1px solid var(--line-dark);
+  }
+  .pole-meta > div:last-child { border-right: none; }
+  .pole-meta .k { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; opacity: .6; margin-bottom: 6px; }
+  .pole-meta .v { font-family: var(--ff-serif); font-size: 20px; line-height: 1.2; }
+  .pole-meta .v em { font-style: italic; color: var(--vert); }
+
+  /* Autres pôles (nav pills) */
+  .pole-nav {
+    background: var(--canopee-deep); color: var(--ivoire);
+    padding: 24px 0; border-top: 1px solid var(--line-dark);
+  }
+  .pole-nav-wrap { display: flex; align-items: center; gap: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .pole-nav-label { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; opacity: .55; flex: 0 0 auto; }
+  .pole-pill {
+    flex: 0 0 auto;
+    padding: 8px 14px; border-radius: 999px;
+    border: 1px solid var(--line-dark);
+    font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: all .2s; white-space: nowrap;
+  }
+  .pole-pill:hover { background: var(--vert); color: var(--encre); border-color: var(--vert); }
+  .pole-pill.active { background: var(--vert); color: var(--encre); border-color: var(--vert); }
+
+  .pole-stats { padding: clamp(64px, 8vw, 112px) 0; background: var(--sable-warm); }
+  .pole-stats h2 {
+    font-size: clamp(36px, 4.5vw, 64px); font-weight: 300;
+    letter-spacing: -0.025em; margin-bottom: 56px; max-width: 20ch; line-height: 1;
+  }
+  .pole-stats h2 em { font-style: italic; color: var(--rose); }
+  .figs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .fig { border-top: 1px solid var(--line); padding-top: 28px; }
+  .fig .big {
+    font-family: var(--ff-serif);
+    font-size: clamp(56px, 7vw, 104px);
+    font-weight: 300; line-height: .92;
+    letter-spacing: -0.03em;
+    font-variation-settings: 'opsz' 144;
+  }
+  .fig .big em { font-style: italic; color: var(--rose); }
+  .fig .big .u { font-size: .4em; color: var(--rose); margin-left: 6px; font-style: italic; }
+  .fig .cap { font-family: var(--ff-serif); font-size: 16px; line-height: 1.5; margin-top: 12px; max-width: 26ch; }
+  .fig .src { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; opacity: .5; margin-top: 10px; }
+
+  .pole-body { padding: clamp(64px, 8vw, 112px) 0; background: var(--ivoire); }
+  .pole-body .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; }
+  .pole-body aside { position: sticky; top: 100px; align-self: start; }
+  .pole-body aside h3 {
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    opacity: .5; margin-bottom: 16px; font-weight: 400;
+  }
+  .pole-body aside ol { list-style: none; counter-reset: s; }
+  .pole-body aside li {
+    counter-increment: s;
+    padding: 10px 0; border-top: 1px solid var(--line);
+    font-family: var(--ff-serif); font-size: 16px;
+    display: grid; grid-template-columns: 24px 1fr; gap: 8px;
+    cursor: pointer; transition: color .2s;
+  }
+  .pole-body aside li:hover { color: var(--rose); }
+  .pole-body aside li::before {
+    content: counter(s, decimal-leading-zero);
+    font-family: var(--ff-mono); font-size: 10px; opacity: .5;
+  }
+  .pole-body article h3 {
+    font-family: var(--ff-serif);
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 400; letter-spacing: -0.02em;
+    line-height: 1.05; margin: 48px 0 20px;
+  }
+  .pole-body article h3 em { font-style: italic; color: var(--rose); }
+  .pole-body article h3:first-child { margin-top: 0; }
+  .pole-body article p {
+    font-family: var(--ff-serif);
+    font-size: 18px; line-height: 1.65;
+    margin-bottom: 18px; max-width: 62ch;
+  }
+  .pole-body article .pull {
+    display: block; font-style: italic; color: var(--rose);
+    font-size: 22px; border-left: 2px solid var(--rose);
+    padding-left: 20px; margin: 32px 0; max-width: 48ch;
+  }
+  .pole-img { aspect-ratio: 16/9; margin: 40px 0; }
+  .pole-body article ul.actors {
+    list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-top: 1px solid var(--line); margin: 16px 0 32px;
+  }
+  .pole-body article ul.actors li {
+    padding: 14px 4px; border-bottom: 1px solid var(--line);
+    font-family: var(--ff-serif); font-size: 17px;
+  }
+  .pole-body article ul.actors li em { font-style: italic; color: var(--rose); font-size: 12px; font-family: var(--ff-mono); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-top: 4px; }
+
+  .expo-band { padding: clamp(64px, 8vw, 112px) 0; background: var(--sable-warm); }
+  .expo-band h2 {
+    font-size: clamp(36px, 4.5vw, 64px); font-weight: 300; letter-spacing: -0.025em;
+    max-width: 18ch; margin-bottom: 48px; line-height: 1;
+  }
+  .expo-band h2 em { font-style: italic; color: var(--rose); }
+  .expo-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line);
+  }
+  .expo {
+    padding: 28px 24px;
+    border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    background: var(--ivoire); transition: all .2s; cursor: pointer;
+  }
+  .expo:hover { background: var(--canopee); color: var(--ivoire); }
+  .expo:hover .expo-stand { color: var(--vert); }
+  .expo-stand { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rose); margin-bottom: 14px; }
+  .expo-name { font-family: var(--ff-serif); font-size: 22px; font-weight: 400; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .expo-tag { font-family: var(--ff-mono); font-size: 11px; opacity: .65; }
+  @media (max-width: 880px) {
+    .pole-hero-grid { grid-template-columns: 1fr; }
+    .pole-big { font-size: 72px; }
+    .pole-meta, .figs, .pole-body .grid, .expo-grid { grid-template-columns: 1fr; }
+    .pole-body article ul.actors { grid-template-columns: 1fr; }
+    .pole-body aside { position: static; }
+  }
+</style>
+</head>
+<body data-screen-label="Pôle">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="assets/valora-logo.png" alt="Valora"/><span class="tag">2027</span></a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="edition-2027.html">Édition 2027</a>
+      <a href="pole.html" class="active">Pôles</a>
+      <a href="caraibe.html">Caraïbe</a>
+      <a href="mag.html">Le Mag</a>
+      <a href="#">À propos</a>
+    </div>
+    <div class="nav-right">
+      <div class="countdown-mini"><span class="dot"></span><span data-countdown="hours">—</span><span style="opacity:.5;">avant Valora</span></div>
+      <div class="lang"><button class="on" data-lang="FR">FR</button><button data-lang="EN">EN</button></div>
+      <a href="pre-inscription.html" class="btn-rose">Pré-inscription →</a>
+    </div>
+  </div>
+</nav>
+
+<section class="pole-hero">
+  <div class="wrap">
+    <div class="crumb" id="crumb">Accueil · Pôles · —</div>
+    <div class="pole-hero-grid">
+      <div class="pole-big" id="p-num">01</div>
+      <div>
+        <h1 id="p-title">—</h1>
+        <p class="lead" id="p-lead">—</p>
+      </div>
+    </div>
+    <div class="pole-meta" id="p-meta"></div>
+  </div>
+</section>
+
+<section class="pole-nav">
+  <div class="wrap pole-nav-wrap" id="p-nav">
+    <span class="pole-nav-label">Les 12 pôles —</span>
+  </div>
+</section>
+
+<section class="pole-stats">
+  <div class="wrap">
+    <div class="eyebrow"><span class="bar"></span>Les chiffres — Martinique</div>
+    <h2 style="margin-top:16px;">Trois repères<br/>avant <em>de discuter.</em></h2>
+    <div class="figs" id="p-figs"></div>
+  </div>
+</section>
+
+<section class="pole-body">
+  <div class="wrap">
+    <div class="grid">
+      <aside>
+        <h3>Dans cet article</h3>
+        <ol>
+          <li><a href="#enjeux">Les enjeux, vus d'ici</a></li>
+          <li><a href="#acteurs">Les acteurs locaux</a></li>
+          <li><a href="#solutions">Solutions sur le terrain</a></li>
+          <li><a href="#caraibe">Regards caribéens</a></li>
+          <li><a href="#lire">À lire dans le Mag</a></li>
+        </ol>
+      </aside>
+      <article id="p-article"></article>
+    </div>
+  </div>
+</section>
+
+<section class="expo-band">
+  <div class="wrap">
+    <div class="eyebrow"><span class="bar"></span>Sur le Village · <span id="p-stand-range">Stands</span></div>
+    <h2 style="margin-top:16px;" id="p-expo-title"><em>Exposants.</em></h2>
+    <div class="expo-grid" id="p-expo"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="serif">Valora 2027.<br/><em style="color:var(--vert); font-style:italic;">À l'hippodrome.</em></div>
+        <p style="opacity:.7; font-size:14px; max-width:36ch;">4ᵉ Village du développement durable de Martinique.</p>
+      </div>
+      <div><h4>Le Village</h4><ul><li><a href="edition-2027.html">Édition 2027</a></li><li><a href="pole.html">Les 12 pôles</a></li><li><a href="caraibe.html">Caraïbe</a></li></ul></div>
+      <div><h4>En continu</h4><ul><li><a href="mag.html">Le Mag</a></li><li><a href="#">Bulletin Valora</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>Association 3ED</li><li><a href="mailto:bonjour@valora.mq">bonjour@valora.mq</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2016–2027 Association 3ED</span><span>Mentions · Confidentialité</span></div>
+  </div>
+</footer>
+
+<script src="assets/valora-shared.js"></script>
+<script src="assets/poles-data.js"></script>
+<script src="assets/pole-render.js"></script>
+</body>
+</html>
