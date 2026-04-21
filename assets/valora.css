@@ -210,8 +210,77 @@ input, textarea, select { font: inherit; color: inherit; }
   .nav-links { gap: 14px; font-size: 13px; }
 }
 @media (max-width: 880px) {
-  .nav-inner { grid-template-columns: auto auto; gap: 12px; }
+  .nav-inner { grid-template-columns: auto 1fr; gap: 12px; position: relative; }
   .nav-links { display: none; }
+  .nav-right .btn-expose { display: none; } /* CTAs move into mobile panel */
+  .nav-burger { display: flex; }
+}
+
+/* Hamburger button (hidden on desktop) */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 40px; height: 40px;
+  padding: 10px 8px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.nav-burger:hover { background: rgba(0,0,0,.04); }
+.nav-burger span {
+  display: block;
+  width: 100%; height: 2px;
+  background: var(--encre);
+  border-radius: 2px;
+  transition: transform .25s, opacity .2s;
+  transform-origin: center;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Mobile slide-down panel */
+.nav-mobile {
+  display: none;
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  background: var(--ivoire);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 20px 40px rgba(0,0,0,.08);
+  max-height: 0; overflow: hidden;
+  transition: max-height .3s ease;
+}
+.nav-mobile.open { max-height: calc(100vh - 70px); overflow: auto; }
+.nav-mobile-inner {
+  display: flex; flex-direction: column;
+  padding: 20px var(--pad) 28px;
+  gap: 2px;
+}
+.nav-mobile-inner a {
+  padding: 14px 0;
+  font-family: var(--ff-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--encre);
+  border-bottom: 1px solid var(--line);
+  transition: color .2s;
+}
+.nav-mobile-inner a:last-of-type { border-bottom: none; }
+.nav-mobile-inner a.active { color: var(--rose); }
+.nav-mobile-inner a:hover { color: var(--rose); }
+.nav-mobile-ctas {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 20px; padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.nav-mobile-ctas .btn-expose { justify-content: center; padding: 14px 20px; font-size: 12px; }
+
+@media (max-width: 880px) {
+  .nav-mobile { display: block; }
 }
 
 /* ---------- Typography ---------- */

@@ -45,9 +45,29 @@
         '<div class="nav-right">' +
           '<div class="lang"><button class="on" data-lang="FR">FR</button><button data-lang="EN">EN</button></div>' +
           ctaHTML +
+          '<button class="nav-burger" aria-label="Menu" aria-expanded="false">' +
+            '<span></span><span></span><span></span>' +
+          '</button>' +
+        '</div>' +
+        '<div class="nav-mobile">' +
+          '<div class="nav-mobile-inner">' + linksHTML +
+            '<div class="nav-mobile-ctas">' + ctaHTML + '</div>' +
+          '</div>' +
         '</div>' +
       '</div>' +
     '</nav>';
+
+  // Hamburger toggle
+  var burger = document.querySelector('.nav-burger');
+  var mobilePanel = document.querySelector('.nav-mobile');
+  if (burger && mobilePanel) {
+    burger.addEventListener('click', function () {
+      var open = burger.classList.toggle('open');
+      mobilePanel.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+  }
 
   // ---------- FR / EN toggle ----------
   // (Moved here from valora-shared.js because the nav is injected AFTER shared.js runs,
