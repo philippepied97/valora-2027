@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kit média - Valora 2027</title>
+<link rel="stylesheet" href="assets/valora.css?v=3" />
+<style>
+  .km-hero {
+    background: var(--canopee); color: var(--ivoire);
+    padding: 72px 0 56px;
+  }
+  .km-hero .crumb {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--vert); margin-bottom: 28px;
+  }
+  .km-hero h1 {
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: 300; line-height: .94;
+    letter-spacing: -0.035em; margin-bottom: 24px;
+    max-width: 14ch;
+  }
+  .km-hero h1 em { font-style: italic; color: var(--vert); }
+  .km-hero .lead {
+    font-family: var(--ff-serif);
+    font-size: clamp(18px, 1.5vw, 22px);
+    font-style: italic; font-weight: 300;
+    max-width: 58ch; opacity: .95; line-height: 1.4;
+  }
+
+  .km-grid-section {
+    background: var(--sable);
+    padding: 72px 0 96px;
+  }
+  .km-grid-section h2 {
+    font-family: var(--ff-serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 300; letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+  .km-grid-section h2 em { font-style: italic; color: var(--rose); }
+
+  .km-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .km-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 36px 32px 32px;
+    display: flex; flex-direction: column;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    min-height: 320px;
+  }
+  .km-card:hover {
+    border-color: var(--rose);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(0,0,0,.06);
+  }
+  .km-card .km-ico {
+    width: 56px; height: 56px; margin-bottom: 24px;
+    color: var(--rose);
+  }
+  .km-card .km-ico svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.3; }
+  .km-card .km-num {
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--vert); margin-bottom: 8px;
+  }
+  .km-card h3 {
+    font-family: var(--ff-serif);
+    font-size: 28px; font-weight: 400;
+    line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .km-card h3 em { font-style: italic; color: var(--rose); }
+  .km-card p {
+    font-size: 14px; line-height: 1.5;
+    color: #555; margin-bottom: 24px;
+    flex: 1;
+  }
+  .km-card .km-meta {
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #999; margin-bottom: 16px;
+  }
+  .km-card .km-btn {
+    font-family: var(--ff-mono); font-size: 12px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--encre); padding: 12px 0;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .km-card:hover .km-btn { color: var(--rose); }
+
+  /* Contact form */
+  .km-contact {
+    background: var(--ivoire);
+    padding: 72px 0 96px;
+  }
+  .km-contact .wrap { max-width: 720px; }
+  .km-contact h2 {
+    font-family: var(--ff-serif);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300; line-height: .98;
+    letter-spacing: -0.025em; margin-bottom: 16px;
+  }
+  .km-contact h2 em { font-style: italic; color: var(--rose); }
+  .km-contact .intro {
+    font-family: var(--ff-serif);
+    font-size: 18px; font-style: italic;
+    font-weight: 300; color: #555;
+    margin-bottom: 36px; max-width: 52ch;
+  }
+  .km-form { display: grid; gap: 20px; }
+  .km-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .km-form label {
+    display: flex; flex-direction: column; gap: 8px;
+    font-family: var(--ff-mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #666;
+  }
+  .km-form input, .km-form select, .km-form textarea {
+    border: none; border-bottom: 1px solid var(--line);
+    background: transparent; padding: 10px 0;
+    font-family: var(--ff-sans); font-size: 16px;
+    color: var(--encre); letter-spacing: 0;
+    text-transform: none;
+    outline: none;
+  }
+  .km-form input:focus, .km-form select:focus, .km-form textarea:focus {
+    border-bottom-color: var(--rose);
+  }
+  .km-form textarea { resize: vertical; min-height: 100px; }
+  .km-form .submit-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 16px; margin-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+  .km-form .note {
+    font-size: 12px; color: #888; font-family: var(--ff-sans); max-width: 34ch; line-height: 1.4;
+  }
+  .km-form button[type=submit] {
+    background: var(--lime); color: var(--encre);
+    padding: 14px 28px; border-radius: 999px;
+    font-family: var(--ff-mono); font-size: 12px;
+    font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .km-form button[type=submit]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(184,211,50,.4);
+  }
+
+  @media (max-width: 880px) {
+    .km-cards { grid-template-columns: 1fr; }
+    .km-form .row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body data-screen-label="Kit média">
+
+<div id="nav-mount"></div>
+
+<section class="km-hero">
+  <div class="wrap">
+    <div class="crumb">Accueil · Kit média</div>
+    <h1>Kit <em>média.</em></h1>
+    <p class="lead">Tout ce qu'il faut pour parler de Valora 2027 - plaquette commerciale, logos, visuels PLV - et un canal direct pour les journalistes et les partenaires.</p>
+  </div>
+</section>
+
+<section class="km-grid-section">
+  <div class="wrap">
+    <h2>Trois <em>ressources,</em> un contact.</h2>
+    <div class="km-cards">
+
+      <a href="#" class="km-card">
+        <div class="km-ico">
+          <svg viewBox="0 0 48 48"><path d="M12 6h20l8 8v28H12z"/><path d="M32 6v10h8"/><path d="M18 24h14M18 30h14M18 36h10"/></svg>
+        </div>
+        <div class="km-num">01 · Document</div>
+        <h3>Plaquette <em>commerciale</em></h3>
+        <p>Le dossier complet à destination des exposants, partenaires et collectivités. Tarifs, stands, services inclus, calendrier.</p>
+        <div class="km-meta">PDF · 24 pages · 4,2 Mo</div>
+        <div class="km-btn"><span>Télécharger</span><span>↓</span></div>
+      </a>
+
+      <a href="#" class="km-card">
+        <div class="km-ico">
+          <svg viewBox="0 0 48 48"><rect x="8" y="8" width="14" height="14"/><rect x="26" y="8" width="14" height="14"/><rect x="8" y="26" width="14" height="14"/><rect x="26" y="26" width="14" height="14"/></svg>
+        </div>
+        <div class="km-num">02 · Identité</div>
+        <h3>Logos <em>& PLV</em></h3>
+        <p>Logos Valora 2027 (AI, EPS, PNG, SVG) en couleurs et monochrome, gabarits PLV, bannières réseaux sociaux, règles d'usage.</p>
+        <div class="km-meta">Archive ZIP · 38 Mo</div>
+        <div class="km-btn"><span>Télécharger</span><span>↓</span></div>
+      </a>
+
+      <a href="#contact" class="km-card">
+        <div class="km-ico">
+          <svg viewBox="0 0 48 48"><path d="M8 14c0-2 2-4 4-4h24c2 0 4 2 4 4v20c0 2-2 4-4 4H12c-2 0-4-2-4-4z"/><path d="M8 16l16 12 16-12"/></svg>
+        </div>
+        <div class="km-num">03 · Échange</div>
+        <h3>Je souhaite <em>être contacté</em></h3>
+        <p>Un projet, une question, une demande d'interview, une proposition de partenariat - l'équipe Valora vous répond sous 48h.</p>
+        <div class="km-meta">Formulaire · réponse 48h</div>
+        <div class="km-btn"><span>Formulaire</span><span>→</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="km-contact" id="contact">
+  <div class="wrap">
+    <div class="eyebrow"><span class="bar"></span>Être contacté</div>
+    <h2 style="margin-top:12px;">Dites-nous <em>ce qu'il vous faut.</em></h2>
+    <p class="intro">Un message court suffit. Nous revenons vers vous sous 48h ouvrées avec les bons éléments ou la bonne personne.</p>
+
+    <form class="km-form" onsubmit="event.preventDefault(); alert('Merci ! Nous vous recontactons sous 48h.');">
+      <div class="row">
+        <label>Prénom
+          <input type="text" name="firstname" required />
+        </label>
+        <label>Nom
+          <input type="text" name="lastname" required />
+        </label>
+      </div>
+      <div class="row">
+        <label>Email
+          <input type="email" name="email" required />
+        </label>
+        <label>Téléphone
+          <input type="tel" name="phone" />
+        </label>
+      </div>
+      <label>Organisation
+        <input type="text" name="org" placeholder="Entreprise, collectivité, média…" />
+      </label>
+      <label>Votre demande concerne
+        <select name="topic">
+          <option>Demande d'information générale</option>
+          <option>Presse · demande d'interview</option>
+          <option>Exposants · tarifs & stands</option>
+          <option>Partenariat · sponsoring</option>
+          <option>Conférences · programmation</option>
+          <option>Délégation caribéenne</option>
+          <option>Autre</option>
+        </select>
+      </label>
+      <label>Message
+        <textarea name="message" rows="4" placeholder="Quelques lignes sur votre besoin…"></textarea>
+      </label>
+      <div class="submit-row">
+        <div class="note">Les informations collectées sont traitées par l'Association 3ED uniquement pour répondre à votre demande.</div>
+        <button type="submit">Envoyer →</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">VALORA</div>
+        <div class="footer-sig">Le Village du développement durable et de l'économie <em>sociale et solidaire.</em></div>
+        <div class="footer-tag">Édition 2027 · Cap Caraïbe · 13-14 mai · Parc Aquabulles, Lamentin</div>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Le village</div>
+        <a href="edition-2027.html">Édition 2027</a>
+        <a href="poles.html">Les 12 pôles</a>
+        <a href="conferences.html">Conférences</a>
+        <a href="caraibe.html">Cap Caraïbe</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Participer</div>
+        <a href="pre-inscription.html">Je viens visiter</a>
+        <a href="pre-inscription.html#exposer">Je veux exposer</a>
+        <a href="kit-media.html">Kit média</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Association 3ED</div>
+        <a href="#">À propos</a>
+        <a href="#">Mentions légales</a>
+        <a href="mag.html">martinique2050.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2027 · Association 3ED · Valora</div>
+      <div class="footer-place">Lamentin, Martinique · FWI</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/valora-shared.js?v=3"></script>
+<script src="assets/valora-nav.js?v=3"></script>
+</body>
+</html>

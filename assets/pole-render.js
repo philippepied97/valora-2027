@@ -5,7 +5,7 @@
   const d = (window.POLES_DATA || {})[id];
   if (!d) return;
 
-  document.title = 'Pôle ' + d.num + ' · ' + d.crumb + ' — Valora 2027';
+  document.title = 'Pôle ' + d.num + ' · ' + d.crumb + ' - Valora 2027';
   document.body.setAttribute('data-screen-label', 'Pôle ' + d.num + ' · ' + d.crumb);
 
   const $ = (s) => document.querySelector(s);
@@ -41,9 +41,4 @@
   ).join('');
 
   $('#p-article').innerHTML = d.article;
-  $('#p-stand-range').textContent = 'Sur le Village · ' + d.standRange;
-  $('#p-expo-title').innerHTML = d.expos.length + ' exposants<br/><em>sur ce pôle.</em>';
-  $('#p-expo').innerHTML = d.expos.map(e =>
-    `<div class="expo"><div class="expo-stand">Stand ${e[0]}</div><div class="expo-name">${e[1]}</div><div class="expo-tag">${e[2]}</div></div>`
-  ).join('');
 })();

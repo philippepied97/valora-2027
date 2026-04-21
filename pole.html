@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pôle — Valora 2027</title>
+<title>Pôle - Valora 2027</title>
 <link rel="stylesheet" href="assets/valora.css?v=3" />
 <style>
   .pole-hero {
@@ -37,7 +37,7 @@
     opacity: .95; font-weight: 300;
   }
   .pole-meta {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
     margin-top: 48px; border-top: 1px solid var(--line-dark);
   }
   .pole-meta > div {
@@ -167,33 +167,16 @@
 </head>
 <body data-screen-label="Pôle">
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="logo"><img src="assets/valora-logo.png" alt="Valora"/><span class="tag">2027</span></a>
-    <div class="nav-links">
-      <a href="index.html">Accueil</a>
-      <a href="edition-2027.html">Édition 2027</a>
-      <a href="pole.html" class="active">Pôles</a>
-      <a href="caraibe.html">Caraïbe</a>
-      <a href="mag.html">Le Mag</a>
-      <a href="#">À propos</a>
-    </div>
-    <div class="nav-right">
-      <div class="countdown-mini"><span class="dot"></span><span data-countdown="hours">—</span><span style="opacity:.5;">avant Valora</span></div>
-      <div class="lang"><button class="on" data-lang="FR">FR</button><button data-lang="EN">EN</button></div>
-      <a href="pre-inscription.html" class="btn-rose">Pré-inscription →</a>
-    </div>
-  </div>
-</nav>
+<div id="nav-mount"></div>
 
 <section class="pole-hero">
   <div class="wrap">
-    <div class="crumb" id="crumb">Accueil · Pôles · —</div>
+    <div class="crumb" id="crumb">Accueil · Pôles · -</div>
     <div class="pole-hero-grid">
       <div class="pole-big" id="p-num">01</div>
       <div>
-        <h1 id="p-title">—</h1>
-        <p class="lead" id="p-lead">—</p>
+        <h1 id="p-title">-</h1>
+        <p class="lead" id="p-lead">-</p>
       </div>
     </div>
     <div class="pole-meta" id="p-meta"></div>
@@ -202,13 +185,13 @@
 
 <section class="pole-nav">
   <div class="wrap pole-nav-wrap" id="p-nav">
-    <span class="pole-nav-label">Les 12 pôles —</span>
+    <span class="pole-nav-label">Les 12 pôles -</span>
   </div>
 </section>
 
 <section class="pole-stats">
   <div class="wrap">
-    <div class="eyebrow"><span class="bar"></span>Les chiffres — Martinique</div>
+    <div class="eyebrow"><span class="bar"></span>Les chiffres - Martinique</div>
     <h2 style="margin-top:16px;">Trois repères<br/>avant <em>de discuter.</em></h2>
     <div class="figs" id="p-figs"></div>
   </div>
@@ -224,19 +207,11 @@
           <li><a href="#acteurs">Les acteurs locaux</a></li>
           <li><a href="#solutions">Solutions sur le terrain</a></li>
           <li><a href="#caraibe">Regards caribéens</a></li>
-          <li><a href="#lire">À lire dans le Mag</a></li>
+          <li><a href="#lire">À lire sur martinique2050.com</a></li>
         </ol>
       </aside>
       <article id="p-article"></article>
     </div>
-  </div>
-</section>
-
-<section class="expo-band">
-  <div class="wrap">
-    <div class="eyebrow"><span class="bar"></span>Sur le Village · <span id="p-stand-range">Stands</span></div>
-    <h2 style="margin-top:16px;" id="p-expo-title"><em>Exposants.</em></h2>
-    <div class="expo-grid" id="p-expo"></div>
   </div>
 </section>
 
@@ -248,15 +223,16 @@
         <p style="opacity:.7; font-size:14px; max-width:36ch;">4ᵉ Village du développement durable de Martinique.</p>
       </div>
       <div><h4>Le Village</h4><ul><li><a href="edition-2027.html">Édition 2027</a></li><li><a href="pole.html">Les 12 pôles</a></li><li><a href="caraibe.html">Caraïbe</a></li></ul></div>
-      <div><h4>En continu</h4><ul><li><a href="mag.html">Le Mag</a></li><li><a href="#">Bulletin Valora</a></li></ul></div>
+      <div><h4>En continu</h4><ul><li><a href="https://martinique2050.com" target="_blank" rel="noopener">martinique2050.com ↗</a></li><li><a href="conferences.html">Conférences</a></li></ul></div>
       <div><h4>Contact</h4><ul><li>Association 3ED</li><li><a href="mailto:bonjour@valora.mq">bonjour@valora.mq</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>© 2016–2027 Association 3ED</span><span>Mentions · Confidentialité</span></div>
+    <div class="footer-bottom"><span>© 2016-2027 Association 3ED</span><span>Mentions · Confidentialité</span></div>
   </div>
 </footer>
 
-<script src="assets/valora-shared.js"></script>
-<script src="assets/poles-data.js"></script>
-<script src="assets/pole-render.js"></script>
+<script src="assets/valora-shared.js?v=3"></script>
+<script src="assets/valora-nav.js?v=3"></script>
+<script src="assets/poles-data.js?v=3"></script>
+<script src="assets/pole-render.js?v=3"></script>
 </body>
 </html>

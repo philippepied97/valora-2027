@@ -1,4 +1,4 @@
-// VALORA shared JS — countdown, FR/EN, fade-in
+// VALORA shared JS - countdown, FR/EN, fade-in
 (function () {
   // ---------- Countdown to 13 May 2027, 09:00 Martinique (UTC-4) ----------
   function updateCountdown() {
@@ -21,31 +21,8 @@
   updateCountdown();
   setInterval(updateCountdown, 60000);
 
-  // ---------- Language toggle (cosmetic) ----------
-  document.querySelectorAll('.lang').forEach(group => {
-    group.querySelectorAll('button').forEach(b => {
-      b.addEventListener('click', () => {
-        group.querySelectorAll('button').forEach(x => x.classList.remove('on'));
-        b.classList.add('on');
-        // persist
-        try { localStorage.setItem('valora_lang', b.dataset.lang); } catch (e) {}
-        // Toggle bilingual content if present
-        const lang = b.dataset.lang;
-        document.querySelectorAll('[data-fr]').forEach(el => {
-          if (lang === 'EN' && el.dataset.en) el.textContent = el.dataset.en;
-          else if (el.dataset.fr) el.textContent = el.dataset.fr;
-        });
-      });
-    });
-    // restore
-    try {
-      const saved = localStorage.getItem('valora_lang');
-      if (saved) {
-        const b = group.querySelector(`[data-lang="${saved}"]`);
-        if (b) b.click();
-      }
-    } catch (e) {}
-  });
+  // ---------- Language toggle moved to valora-nav.js ----------
+  // (Nav is injected after this script runs, so binding here would miss the .lang buttons.)
 
   // ---------- Fade-up on scroll ----------
   const io = new IntersectionObserver((entries) => {

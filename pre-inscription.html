@@ -3,39 +3,124 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pré-inscription — Valora 2027</title>
+<title>Inscription - Valora 2027</title>
 <link rel="stylesheet" href="assets/valora.css?v=3" />
 <style>
-  .pre {
-    min-height: calc(100vh - 80px);
-    display: grid; grid-template-columns: 1fr 1fr;
-  }
-  .pre-left {
+  /* ============ CHOICE GATE ============ */
+  .gate { min-height: calc(100vh - 80px); display: grid; grid-template-columns: 1fr 1fr; }
+  .gate-intro {
     background: var(--sable);
+    padding: clamp(56px, 7vw, 96px) clamp(40px, 5vw, 80px);
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid var(--line);
+  }
+  .gate-intro .crumb { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 24px; }
+  .gate-intro h1 {
+    font-family: var(--ff-serif); font-size: clamp(48px, 6vw, 88px);
+    font-weight: 300; line-height: .95; letter-spacing: -0.03em;
+    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    margin-bottom: 28px;
+  }
+  .gate-intro h1 em { font-style: italic; color: var(--rose); }
+  .gate-intro p { font-family: var(--ff-serif); font-size: 20px; font-style: italic; font-weight: 300; color: #333; max-width: 44ch; line-height: 1.5; }
+
+  .gate-choices {
+    background: var(--ivoire);
+    padding: clamp(56px, 7vw, 96px) clamp(40px, 5vw, 80px);
+    display: flex; flex-direction: column; gap: 24px; justify-content: center;
+  }
+  .choice {
+    display: block;
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 36px 40px;
+    cursor: pointer; transition: all .2s;
+    text-align: left;
+    position: relative; overflow: hidden;
+  }
+  .choice:hover { transform: translateY(-2px); border-color: var(--encre); box-shadow: 0 24px 48px -24px rgba(0,0,0,.2); }
+  .choice .k {
+    font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--rose);
+    margin-bottom: 10px;
+  }
+  .choice.visiter .k { color: var(--rose); }
+  .choice.exposer .k { color: var(--vert-deep); }
+  .choice h3 {
+    font-family: var(--ff-serif); font-size: 40px; font-weight: 300;
+    letter-spacing: -0.02em; line-height: 1; margin-bottom: 12px;
+  }
+  .choice h3 em { font-style: italic; color: var(--rose); }
+  .choice.exposer h3 em { color: var(--vert-deep); }
+  .choice p {
+    font-family: var(--ff-serif); font-size: 16px; line-height: 1.55;
+    color: #444; max-width: 46ch;
+  }
+  .choice .arrow {
+    position: absolute; right: 36px; top: 36px;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--sable); display: grid; place-items: center;
+    font-size: 20px; transition: all .2s;
+  }
+  .choice:hover .arrow { background: var(--rose); color: #fff; transform: translateX(4px); }
+  .choice.exposer:hover .arrow { background: var(--vert); color: var(--canopee-deep); }
+  .choice .meta {
+    margin-top: 20px;
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; opacity: .6;
+  }
+
+  /* ============ FORMS ============ */
+  .form-page { min-height: calc(100vh - 80px); display: grid; grid-template-columns: 1fr 1fr; }
+  .form-page.hidden, .gate.hidden { display: none; }
+
+  .form-side {
     padding: clamp(56px, 7vw, 96px) clamp(40px, 5vw, 80px);
     display: flex; flex-direction: column; justify-content: space-between;
   }
-  .pre-left .crumb { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 24px; }
-  .pre-left h1 { font-family: var(--ff-serif); font-size: clamp(48px, 6.5vw, 96px); font-weight: 300; line-height: .95; letter-spacing: -0.03em; font-variation-settings: 'opsz' 144, 'SOFT' 30; margin-bottom: 28px; }
-  .pre-left h1 em { font-style: italic; color: var(--rose); }
-  .pre-left .lead { font-family: var(--ff-serif); font-size: 20px; font-style: italic; font-weight: 300; color: #333; max-width: 42ch; margin-bottom: 40px; line-height: 1.5; }
+  .form-side.visiter-side { background: var(--sable); }
+  .form-side.exposer-side { background: var(--canopee-deep); color: var(--ivoire); }
+  .form-side .back {
+    font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: inherit; opacity: .65;
+    background: none; cursor: pointer; margin-bottom: 32px; text-align: left;
+  }
+  .form-side .back:hover { opacity: 1; }
+  .form-side .crumb { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 24px; }
+  .exposer-side .crumb { color: var(--vert); }
+  .form-side h1 {
+    font-family: var(--ff-serif); font-size: clamp(48px, 6.5vw, 96px);
+    font-weight: 300; line-height: .95; letter-spacing: -0.03em;
+    font-variation-settings: 'opsz' 144, 'SOFT' 30; margin-bottom: 28px;
+  }
+  .form-side h1 em { font-style: italic; color: var(--rose); }
+  .exposer-side h1 em { color: var(--vert); }
+  .form-side .lead { font-family: var(--ff-serif); font-size: 19px; font-style: italic; font-weight: 300; max-width: 42ch; margin-bottom: 40px; line-height: 1.5; opacity: .9; }
+
   .what {
     border-top: 1px solid var(--line);
     padding-top: 28px;
   }
+  .exposer-side .what { border-top-color: var(--line-dark); }
   .what h4 { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 16px; font-weight: 400; }
+  .exposer-side .what h4 { color: var(--vert); }
   .what ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .what li { font-family: var(--ff-serif); font-size: 17px; display: flex; gap: 12px; }
-  .what li::before { content: '→'; color: var(--vert-deep); }
+  .what li { font-family: var(--ff-serif); font-size: 16px; display: flex; gap: 12px; line-height: 1.5; }
+  .what li::before { content: '→'; color: var(--vert-deep); flex-shrink: 0; }
+  .exposer-side .what li::before { color: var(--vert); }
   .what li em { font-style: italic; color: var(--rose); }
+  .exposer-side .what li em { color: var(--vert); }
 
-  .pre-right {
+  .form-right {
     background: var(--ivoire);
     padding: clamp(56px, 7vw, 96px) clamp(40px, 5vw, 80px);
   }
   .form-kicker { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose); margin-bottom: 12px; }
+  .form-right.exposer .form-kicker { color: var(--vert-deep); }
   .form-title { font-family: var(--ff-serif); font-size: clamp(32px, 3.5vw, 48px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; margin-bottom: 36px; }
   .form-title em { font-style: italic; color: var(--rose); }
+  .form-right.exposer .form-title em { color: var(--vert-deep); }
 
   .seg { display: flex; gap: 6px; padding: 6px; background: var(--sable); border-radius: 999px; margin-bottom: 32px; }
   .seg button { flex: 1; padding: 12px 16px; border-radius: 999px; font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; transition: all .2s; }
@@ -56,8 +141,12 @@
     font-size: 15px; font-family: var(--ff-sans);
     transition: all .2s;
   }
+  .field textarea { min-height: 90px; resize: vertical; font-family: var(--ff-serif); }
   .field input:focus, .field select:focus, .field textarea:focus {
     outline: none; border-color: var(--rose); background: #fff;
+  }
+  .form-right.exposer .field input:focus, .form-right.exposer .field select:focus, .form-right.exposer .field textarea:focus {
+    border-color: var(--vert-deep);
   }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
@@ -68,7 +157,9 @@
     background: var(--sable);
   }
   .day-card.on { border-color: var(--rose); background: var(--rose-soft); }
+  .form-right.exposer .day-card.on { border-color: var(--vert-deep); background: #F0F5D8; }
   .day-card .k { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rose); }
+  .form-right.exposer .day-card .k { color: var(--vert-deep); }
   .day-card .v { font-family: var(--ff-serif); font-size: 20px; margin-top: 4px; }
   .day-card .v em { font-style: italic; }
 
@@ -76,10 +167,11 @@
   .int-chip {
     padding: 10px 12px; border: 1px solid var(--line); border-radius: 999px;
     font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-    cursor: pointer; transition: all .2s; text-align: center;
+    cursor: pointer; transition: all .2s; text-align: center; background: var(--sable);
   }
   .int-chip:hover { border-color: var(--rose); }
   .int-chip.on { background: var(--vert); border-color: var(--vert); color: var(--encre); }
+
   @media (max-width: 640px) { .interest-grid { grid-template-columns: 1fr 1fr; } }
 
   .check { display: flex; gap: 12px; align-items: start; margin: 8px 0; }
@@ -88,14 +180,33 @@
 
   .submit {
     width: 100%; padding: 18px;
-    background: var(--rose); color: #fff;
     border-radius: 999px;
     font-family: var(--ff-sans); font-size: 15px; font-weight: 600;
     letter-spacing: 0.02em;
     margin-top: 16px;
     transition: all .2s;
   }
-  .submit:hover { background: var(--rose-deep); transform: translateY(-1px); box-shadow: 0 12px 24px rgba(230,0,126,.25); }
+  .submit.rose { background: var(--rose); color: #fff; }
+  .submit.rose:hover { background: var(--rose-deep); transform: translateY(-1px); box-shadow: 0 12px 24px rgba(230,0,126,.25); }
+  .submit.vert { background: var(--vert); color: var(--canopee-deep); box-shadow: 0 2px 0 var(--vert-deep); }
+  .submit.vert:hover { background: var(--vert-deep); color: #fff; transform: translateY(-1px); box-shadow: 0 12px 24px rgba(127,160,36,.3); }
+
+  /* Exposer-specific: surface pack cards */
+  .pack-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .pack-card {
+    display: flex; justify-content: space-between; align-items: start; gap: 16px;
+    padding: 16px 18px; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--sable); cursor: pointer; transition: all .2s;
+  }
+  .pack-card:hover { border-color: var(--vert-deep); }
+  .pack-card.on { border-color: var(--vert-deep); background: #F0F5D8; }
+  .pack-card .pk-name { font-family: var(--ff-serif); font-size: 17px; font-weight: 500; }
+  .pack-card .pk-desc { font-family: var(--ff-serif); font-size: 14px; color: #555; font-style: italic; margin-top: 4px; line-height: 1.4; }
+  .pack-card .pk-price {
+    font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--vert-deep);
+    padding: 6px 10px; background: #fff; border-radius: 4px; flex-shrink: 0;
+  }
 
   .thanks {
     display: none;
@@ -105,54 +216,69 @@
   .thanks.on { display: block; }
   .thanks h2 { font-family: var(--ff-serif); font-size: clamp(36px, 4vw, 56px); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 16px; }
   .thanks h2 em { font-style: italic; color: var(--rose); }
+  .form-right.exposer .thanks h2 em { color: var(--vert-deep); }
   .thanks p { font-family: var(--ff-serif); font-size: 18px; color: #333; margin-bottom: 32px; max-width: 36ch; margin-left: auto; margin-right: auto; }
 
   @media (max-width: 880px) {
-    .pre { grid-template-columns: 1fr; }
+    .gate, .form-page { grid-template-columns: 1fr; }
+    .gate-intro { border-right: none; border-bottom: 1px solid var(--line); }
   }
 </style>
 </head>
-<body data-screen-label="Pré-inscription">
+<body data-screen-label="Inscription">
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="logo"><img src="assets/valora-logo.png" alt="Valora"/><span class="tag">2027</span></a>
-    <div class="nav-links">
-      <a href="index.html">Accueil</a>
-      <a href="edition-2027.html">Édition 2027</a>
-      <a href="pole.html?id=01">Pôles</a>
-      <a href="caraibe.html">Caraïbe</a>
-      <a href="mag.html">Le Mag</a>
-      <a href="#">À propos</a>
-    </div>
-    <div class="nav-right">
-      <div class="countdown-mini"><span class="dot"></span><span data-countdown="hours">—</span><span style="opacity:.5;">avant Valora</span></div>
-      <div class="lang"><button class="on" data-lang="FR">FR</button><button data-lang="EN">EN</button></div>
-    </div>
+<div id="nav-mount"></div>
+
+<!-- ========================== GATE : CHOIX ========================== -->
+<section class="gate" id="gate">
+  <div class="gate-intro">
+    <div class="crumb">Accueil · Inscription</div>
+    <h1>Vous venez<br/>à <em>Valora</em> pour<br/>faire <em>quoi</em> ?</h1>
+    <p>Deux chemins possibles. L'entrée est gratuite pour tout le monde - visiteurs comme exposants. On demande juste un peu d'info pour bien vous accueillir.</p>
   </div>
-</nav>
 
-<section class="pre">
-  <div class="pre-left">
+  <div class="gate-choices">
+    <button class="choice visiter" onclick="openForm('visiter')">
+      <div class="arrow">→</div>
+      <div class="k">Option 1 · Entrée libre</div>
+      <h3>Je viens <em>visiter</em>.</h3>
+      <p>Deux jours, douze pôles, deux cents acteurs de la transition. Je prends un badge et je circule - ateliers, démos, conférences, dégustations.</p>
+      <div class="meta"><span>~ 90 secondes</span><span>·</span><span>Badge nominatif</span><span>·</span><span>Navettes gratuites</span></div>
+    </button>
+
+    <button class="choice exposer" onclick="openForm('exposer')">
+      <div class="arrow">→</div>
+      <div class="k">Option 2 · Stand ou démo</div>
+      <h3>Je veux <em>exposer</em>.</h3>
+      <p>Association, entreprise, collectif, institution - je tiens un stand, j'anime un atelier, ou je propose une démo sur un des douze pôles.</p>
+      <div class="meta"><span>Candidature</span><span>·</span><span>Réponse sous 10 j</span><span>·</span><span>Packs dès 350 €</span></div>
+    </button>
+  </div>
+</section>
+
+<!-- ========================== FORM : VISITER ========================== -->
+<section class="form-page hidden" id="form-visiter">
+  <div class="form-side visiter-side">
     <div>
-      <div class="crumb">Accueil · Pré-inscription</div>
+      <button class="back" onclick="backToGate()">← Changer de chemin</button>
+      <div class="crumb">Accueil · Inscription · Visiter</div>
       <h1>Je garde<br/>ma place<br/>pour <em>Valora<br/>2027.</em></h1>
-      <p class="lead">Entrée gratuite, bien sûr. La pré-inscription nous aide simplement à dimensionner l'accueil, les navettes et les temps de parole. Moins de 90 secondes.</p>
+      <p class="lead">Entrée gratuite, bien sûr. La pré-inscription nous aide simplement à dimensionner l'accueil, les navettes et les temps de parole.</p>
     </div>
     <div class="what">
       <h4>Ce que ça vous garantit</h4>
       <ul>
-        <li>Un <em>badge nominatif</em> prêt à l'accueil — sans faire la queue</li>
+        <li>Un <em>badge nominatif</em> prêt à l'accueil - sans faire la queue</li>
         <li>Une <em>navette gratuite</em> depuis Fort-de-France, Le Marin ou Trinité</li>
         <li>Un <em>programme personnalisé</em> selon vos centres d'intérêt</li>
-        <li>Le <em>récap' J+1</em> — photos, vidéos, contacts des exposants rencontrés</li>
+        <li>Le <em>récap' J+1</em> - photos, vidéos, contacts rencontrés</li>
       </ul>
     </div>
   </div>
 
-  <div class="pre-right">
-    <div id="form-container">
-      <div class="form-kicker">Formulaire · 4 étapes · ~90 secondes</div>
+  <div class="form-right">
+    <div id="v-form-wrap">
+      <div class="form-kicker">Formulaire · ~90 secondes</div>
       <h2 class="form-title">Quelques<br/><em>infos</em>, et c'est bon.</h2>
 
       <div class="seg" role="tablist">
@@ -162,7 +288,7 @@
         <button type="button" data-role="presse">Presse</button>
       </div>
 
-      <form id="preform" onsubmit="event.preventDefault(); document.getElementById('form-container').style.display='none'; document.getElementById('thanks').classList.add('on');">
+      <form onsubmit="event.preventDefault(); document.getElementById('v-form-wrap').style.display='none'; document.getElementById('v-thanks').classList.add('on');">
         <div class="two">
           <div class="field"><label>Prénom</label><input required placeholder="Marie-Laure" /></div>
           <div class="field"><label>Nom</label><input required placeholder="Joseph-Angélique" /></div>
@@ -183,57 +309,229 @@
 
         <div class="field">
           <label>Les pôles qui m'intéressent (facultatif)</label>
-          <div class="interest-grid">
-            <button type="button" class="int-chip">Eau & Air</button>
-            <button type="button" class="int-chip">Énergie</button>
-            <button type="button" class="int-chip">Biodiversité</button>
-            <button type="button" class="int-chip">Agriculture</button>
-            <button type="button" class="int-chip">Patrimoine</button>
-            <button type="button" class="int-chip">Mobilité</button>
-            <button type="button" class="int-chip">Déchets</button>
-            <button type="button" class="int-chip">Tourisme</button>
-            <button type="button" class="int-chip">Risques</button>
-            <button type="button" class="int-chip">Éco. circ.</button>
-            <button type="button" class="int-chip">Éducation</button>
-            <button type="button" class="int-chip">Caraïbe FR/EN</button>
-          </div>
+          <div class="interest-grid" id="v-poles"></div>
         </div>
 
         <div class="field">
           <label>Transport</label>
-          <select><option>Véhicule personnel — parking gratuit</option><option>Navette depuis Fort-de-France</option><option>Navette depuis Le Marin</option><option>Navette depuis Trinité</option><option>Vélo / trottinette</option></select>
+          <select><option>Véhicule personnel - parking gratuit</option><option>Navette depuis Fort-de-France</option><option>Navette depuis Le Marin</option><option>Navette depuis Trinité</option><option>Vélo / trottinette</option></select>
         </div>
 
-        <div class="check"><input type="checkbox" id="nl" checked /><label for="nl">Je m'abonne au Bulletin Valora mensuel — 3 min de lecture, désabonnement en un clic</label></div>
-        <div class="check"><input type="checkbox" id="cgu" required /><label for="cgu">J'accepte que l'Association 3ED utilise mes données pour la gestion de mon inscription — <a href="#" style="color: var(--rose); text-decoration: underline;">voir la politique de confidentialité</a></label></div>
+        <div class="check"><input type="checkbox" id="v-nl" checked /><label for="v-nl">Je m'abonne au Bulletin Valora mensuel - 3 min de lecture, désabonnement en un clic</label></div>
+        <div class="check"><input type="checkbox" id="v-cgu" required /><label for="v-cgu">J'accepte que l'Association 3ED utilise mes données pour la gestion de mon inscription</label></div>
 
-        <button type="submit" class="submit">Confirmer ma pré-inscription →</button>
+        <button type="submit" class="submit rose">Confirmer ma pré-inscription →</button>
       </form>
     </div>
 
-    <div class="thanks" id="thanks">
+    <div class="thanks" id="v-thanks">
       <div style="font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--vert-deep); margin-bottom: 24px;">✓ Pré-inscription confirmée</div>
       <h2>Merci,<br/>on vous <em>attend.</em></h2>
-      <p>Un email de confirmation est parti vers votre boîte. Vous recevrez votre badge nominatif au format QR fin avril 2027.</p>
+      <p>Un email de confirmation est parti vers votre boîte. Vous recevrez votre badge au format QR fin avril 2027.</p>
       <a href="index.html" class="btn-primary">Retour à l'accueil →</a>
     </div>
   </div>
 </section>
 
-<script src="assets/valora-shared.js"></script>
+<!-- ========================== FORM : EXPOSER ========================== -->
+<section class="form-page hidden" id="form-exposer">
+  <div class="form-side exposer-side">
+    <div>
+      <button class="back" onclick="backToGate()">← Changer de chemin</button>
+      <div class="crumb">Accueil · Inscription · Exposer</div>
+      <h1>Je rejoins<br/>le <em>village</em><br/>Valora 2027.</h1>
+      <p class="lead">On sélectionne sur la cohérence avec les douze pôles - pas sur la taille. Une asso d'éducation, un BE solaire, une coopérative agricole ou une institution : tous ont leur place si le projet parle de transition.</p>
+    </div>
+    <div class="what">
+      <h4>Ce qu'on vous fournit</h4>
+      <ul>
+        <li>Un <em>stand clé en main</em> - mobilier, électricité, éclairage</li>
+        <li>Une <em>signalétique</em> intégrée aux couleurs du pôle</li>
+        <li>Un <em>créneau conférence</em> ou atelier selon le pack choisi</li>
+        <li>Des <em>rencontres programmées</em> avec presse et collectivités</li>
+        <li>Un dossier <em>photo/vidéo</em> livré à J+5 - pour vos réseaux</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-right exposer">
+    <div id="e-form-wrap">
+      <div class="form-kicker">Candidature · Réponse sous 10 jours</div>
+      <h2 class="form-title">Parlez-nous<br/>de votre <em>projet</em>.</h2>
+
+      <form onsubmit="event.preventDefault(); document.getElementById('e-form-wrap').style.display='none'; document.getElementById('e-thanks').classList.add('on');">
+        <div class="field">
+          <label>Type de structure</label>
+          <select>
+            <option>Association</option>
+            <option>Entreprise / TPE-PME</option>
+            <option>Coopérative / SCIC / SCOP</option>
+            <option>Collectivité / institution publique</option>
+            <option>Collectif informel / artiste</option>
+            <option>Centre de recherche / université</option>
+            <option>Startup</option>
+          </select>
+        </div>
+
+        <div class="field"><label>Nom de la structure</label><input required placeholder="Ex. Coopérative Bèlè Agroécologie" /></div>
+
+        <div class="two">
+          <div class="field"><label>Contact · Prénom</label><input required placeholder="Jean-Christophe" /></div>
+          <div class="field"><label>Contact · Nom</label><input required placeholder="Fanon-Césaire" /></div>
+        </div>
+        <div class="two">
+          <div class="field"><label>Email</label><input type="email" required placeholder="contact@structure.mq" /></div>
+          <div class="field"><label>Téléphone</label><input type="tel" required placeholder="0696 00 00 00" /></div>
+        </div>
+
+        <div class="field">
+          <label>Pôle principal visé</label>
+          <select id="e-pole-select">
+            <option>- Choisir un pôle -</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Décrivez le projet ou la solution (300 signes)</label>
+          <textarea required placeholder="Ex. Système de récupération d'eau de pluie low-tech installé sur 40 foyers en 2025. On veut présenter le kit, démontrer le montage, et partager les retours."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Format souhaité</label>
+          <div class="pack-grid">
+            <div class="pack-card" data-pack="stand-s">
+              <div>
+                <div class="pk-name">Stand Essentiel · 6 m²</div>
+                <div class="pk-desc">Table, 2 chaises, 1 prise, signalétique pôle. Idéal asso / coopérative.</div>
+              </div>
+              <div class="pk-price">350 €</div>
+            </div>
+            <div class="pack-card" data-pack="stand-m">
+              <div>
+                <div class="pk-name">Stand Signature · 12 m²</div>
+                <div class="pk-desc">Double stand, écran, meublage bois local, 1 créneau conférence.</div>
+              </div>
+              <div class="pk-price">850 €</div>
+            </div>
+            <div class="pack-card" data-pack="demo">
+              <div>
+                <div class="pk-name">Démo en extérieur · 25 m²</div>
+                <div class="pk-desc">Pour solutions techniques : four, système d'eau, équipement. Accès véhicule.</div>
+              </div>
+              <div class="pk-price">550 €</div>
+            </div>
+            <div class="pack-card" data-pack="atelier">
+              <div>
+                <div class="pk-name">Atelier animé · 90 min</div>
+                <div class="pk-desc">Sans stand, format atelier dans une des 4 salles dédiées. Jauge 30.</div>
+              </div>
+              <div class="pk-price">200 €</div>
+            </div>
+            <div class="pack-card" data-pack="soutien">
+              <div>
+                <div class="pk-name">Porté par le pôle · gratuit</div>
+                <div class="pk-desc">Pour petites structures - candidature examinée par le coordinateur de pôle.</div>
+              </div>
+              <div class="pk-price">0 €</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Disponibilité</label>
+          <div class="day-picker">
+            <div class="day-card on" data-day="13"><div class="k">Jeudi</div><div class="v">13 <em>mai</em></div></div>
+            <div class="day-card on" data-day="14"><div class="k">Vendredi</div><div class="v">14 <em>mai</em></div></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Site web / réseau (optionnel)</label>
+          <input type="url" placeholder="https://..." />
+        </div>
+
+        <div class="check"><input type="checkbox" id="e-cgu" required /><label for="e-cgu">J'accepte que l'Association 3ED examine cette candidature et me recontacte. Les pièces justificatives seront demandées en cas de présélection.</label></div>
+
+        <button type="submit" class="submit vert">Envoyer ma candidature →</button>
+      </form>
+    </div>
+
+    <div class="thanks" id="e-thanks">
+      <div style="font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--vert-deep); margin-bottom: 24px;">✓ Candidature enregistrée</div>
+      <h2>Merci, on vous<br/>revient sous <em>10 jours.</em></h2>
+      <p>Un membre de l'équipe Valora et le coordinateur du pôle concerné examinent votre dossier. Réponse par email - qu'elle soit positive ou non, on répond toujours.</p>
+      <a href="index.html" class="btn-primary">Retour à l'accueil →</a>
+    </div>
+  </div>
+</section>
+
+<script src="assets/valora-shared.js?v=3"></script>
+<script src="assets/valora-nav.js?v=3"></script>
+<script src="assets/poles-data.js?v=3"></script>
 <script>
-document.querySelectorAll('.seg button').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.seg button').forEach(x => x.classList.remove('on'));
-    b.classList.add('on');
+  // Populate pole chips + exposer select from shared POLES_DATA
+  const order = window.POLE_ORDER || [];
+  const data = window.POLES_DATA || {};
+  const vPoleBox = document.getElementById('v-poles');
+  const eSel = document.getElementById('e-pole-select');
+  order.forEach(pid => {
+    const p = data[pid]; if (!p) return;
+    const label = (p.crumb || p.slug || pid);
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'int-chip';
+    b.textContent = label;
+    vPoleBox.appendChild(b);
+    const o = document.createElement('option');
+    o.value = pid;
+    o.textContent = p.num + ' - ' + label;
+    eSel.appendChild(o);
   });
-});
-document.querySelectorAll('.day-card').forEach(c => {
-  c.addEventListener('click', () => c.classList.toggle('on'));
-});
-document.querySelectorAll('.int-chip').forEach(c => {
-  c.addEventListener('click', () => c.classList.toggle('on'));
-});
+
+  // Gate → form routing
+  function openForm(which) {
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('form-visiter').classList.toggle('hidden', which !== 'visiter');
+    document.getElementById('form-exposer').classList.toggle('hidden', which !== 'exposer');
+    history.replaceState(null, '', which === 'visiter' ? '?mode=visiter' : '?mode=exposer');
+    window.scrollTo(0, 0);
+  }
+  function backToGate() {
+    document.getElementById('gate').classList.remove('hidden');
+    document.getElementById('form-visiter').classList.add('hidden');
+    document.getElementById('form-exposer').classList.add('hidden');
+    history.replaceState(null, '', location.pathname);
+    window.scrollTo(0, 0);
+  }
+  // URL-based deep-link
+  const qs = new URLSearchParams(location.search);
+  if (qs.get('mode') === 'visiter' || qs.get('mode') === 'exposer') openForm(qs.get('mode'));
+
+  // Segment control (role)
+  document.querySelectorAll('.seg button').forEach(b => {
+    b.addEventListener('click', () => {
+      const parent = b.parentElement;
+      parent.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+    });
+  });
+  // Day cards
+  document.querySelectorAll('.day-card').forEach(c => {
+    c.addEventListener('click', () => c.classList.toggle('on'));
+  });
+  // Interest chips
+  document.addEventListener('click', e => {
+    if (e.target.classList && e.target.classList.contains('int-chip')) {
+      e.target.classList.toggle('on');
+    }
+  });
+  // Pack cards - single select
+  document.querySelectorAll('.pack-card').forEach(c => {
+    c.addEventListener('click', () => {
+      document.querySelectorAll('.pack-card').forEach(x => x.classList.remove('on'));
+      c.classList.add('on');
+    });
+  });
 </script>
 </body>
 </html>

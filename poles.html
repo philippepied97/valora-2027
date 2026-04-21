@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Les 12 pôles - Valora 2027</title>
+<link rel="stylesheet" href="assets/valora.css?v=3" />
+<style>
+  .poles-hero {
+    background: var(--canopee); color: var(--ivoire);
+    padding: 72px 0 64px;
+  }
+  .poles-hero .crumb {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--vert); margin-bottom: 32px;
+  }
+  .poles-hero h1 {
+    font-size: clamp(56px, 9vw, 140px);
+    font-weight: 300; line-height: .92;
+    letter-spacing: -0.035em; margin-bottom: 28px;
+    max-width: 14ch;
+  }
+  .poles-hero h1 em { font-style: italic; color: var(--vert); }
+  .poles-hero .lead {
+    font-family: var(--ff-serif);
+    font-size: clamp(19px, 1.6vw, 24px);
+    font-style: italic; font-weight: 300;
+    max-width: 62ch; opacity: .95; line-height: 1.35;
+  }
+  .poles-hero .lead + .lead { margin-top: 18px; }
+
+  /* List section */
+  .poles-list { background: var(--sable); padding: 64px 0 96px; }
+  .poles-list .eyebrow { margin-bottom: 16px; }
+  .poles-list h2 {
+    font-family: var(--ff-serif);
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 300; line-height: .98;
+    letter-spacing: -0.025em; margin-bottom: 40px;
+    max-width: 22ch;
+  }
+  .poles-list h2 em { font-style: italic; color: var(--rose); }
+
+  .big-list {
+    border-top: 1px solid var(--line);
+  }
+  .big-pole {
+    display: grid;
+    grid-template-columns: 72px 56px 1fr auto auto;
+    align-items: center;
+    gap: 24px;
+    padding: 22px 8px;
+    border-bottom: 1px solid var(--line);
+    color: var(--encre);
+    transition: background .2s, color .2s;
+  }
+  .big-pole:hover { background: var(--rose); color: #fff; }
+  .big-pole .bp-num {
+    font-family: var(--ff-mono);
+    font-size: 13px; letter-spacing: 0.16em;
+    opacity: .55;
+  }
+  .big-pole:hover .bp-num { opacity: .9; color: var(--vert); }
+  .big-pole .bp-glyph { width: 44px; height: 44px; }
+  .big-pole .bp-glyph svg {
+    width: 100%; height: 100%;
+    stroke: currentColor; fill: none; stroke-width: 1.3;
+  }
+  .big-pole .bp-name {
+    font-family: var(--ff-serif);
+    font-size: clamp(22px, 2.4vw, 34px);
+    font-weight: 300; letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .big-pole .bp-name em { font-style: italic; color: var(--rose); }
+  .big-pole:hover .bp-name em { color: var(--vert); }
+  .big-pole .bp-tease {
+    font-family: var(--ff-sans);
+    font-size: 13px; line-height: 1.4;
+    color: #555; max-width: 36ch;
+    opacity: .85;
+  }
+  .big-pole:hover .bp-tease { color: rgba(255,255,255,.85); }
+  .big-pole .bp-arrow {
+    font-family: var(--ff-mono); font-size: 12px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--vert); opacity: 0;
+    transform: translateX(-6px); transition: all .25s;
+  }
+  .big-pole:hover .bp-arrow { opacity: 1; transform: translateX(0); }
+
+  @media (max-width: 900px) {
+    .big-pole { grid-template-columns: 48px 36px 1fr auto; }
+    .big-pole .bp-tease { display: none; }
+  }
+  @media (max-width: 560px) {
+    .big-pole { grid-template-columns: 36px 28px 1fr; gap: 14px; }
+    .big-pole .bp-arrow { display: none; }
+  }
+</style>
+</head>
+<body data-screen-label="Pôles">
+
+<div id="nav-mount"></div>
+
+<section class="poles-hero">
+  <div class="wrap">
+    <div class="crumb">Accueil · Les 12 pôles</div>
+    <h1>Douze pôles,<br/><em>un village.</em></h1>
+    <p class="lead">Valora s'organise autour de douze pôles thématiques qui couvrent l'essentiel de la transition durable en Martinique - de l'eau qui coule au robinet au bâtiment qui résiste au cyclone, de l'assiette des écoliers à la feuille de route des institutions.</p>
+    <p class="lead">Chaque pôle réunit les acteurs locaux, des chiffres-clés mesurables, des solutions testées sur le terrain et un regard caribéen. Cliquez pour entrer dans le détail.</p>
+  </div>
+</section>
+
+<section class="poles-list">
+  <div class="wrap">
+    <div class="eyebrow"><span class="bar"></span>Les thématiques</div>
+    <h2>Chaque pôle<br/>a <em>son terrain,<br/>ses chiffres, ses gens.</em></h2>
+
+    <div class="big-list">
+      <a href="pole.html?id=01" class="big-pole">
+        <div class="bp-num">01</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><path d="M24 8c-7 10-11 16-11 22a11 11 0 1 0 22 0c0-6-4-12-11-22z"/><path d="M18 28c0 4 2 7 6 8"/></svg></div>
+        <div class="bp-name">Eau <em>&</em> Assainissement</div>
+        <div class="bp-tease">Captage, distribution, traitement - la boucle complète vue d'un seul tenant.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=02" class="big-pole">
+        <div class="bp-num">02</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><path d="M28 6 14 26h10l-4 16 14-20H24l4-16z"/></svg></div>
+        <div class="bp-name">Énergie <em>& transition</em></div>
+        <div class="bp-tease">Produire, stocker, consommer mieux - et sortir de la dépendance au fioul.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=03" class="big-pole">
+        <div class="bp-num">03</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><path d="M10 38V18l14-10 14 10v20"/><path d="M20 38V26h8v12"/></svg></div>
+        <div class="bp-name">Construction <em>durable</em></div>
+        <div class="bp-tease">Bâtir en climat tropical et sismique avec moins de carbone et plus de matériaux locaux.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=04" class="big-pole">
+        <div class="bp-num">04</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><path d="M8 36h32"/><path d="M14 36V24c0-4 4-7 10-7s10 3 10 7v12"/><path d="M20 20v-6M28 20v-6"/></svg></div>
+        <div class="bp-name">Agriculture <em>durable</em></div>
+        <div class="bp-tease">Nourrir l'île en produisant autrement - filières courtes, sols régénérés.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=05" class="big-pole">
+        <div class="bp-num">05</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 10v28M10 24h28"/></svg></div>
+        <div class="bp-name">Santé <em>environnementale</em></div>
+        <div class="bp-tease">Air, eau, sols, alimentation - ce qui entre dans les corps sort de l'environnement.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=06" class="big-pole">
+        <div class="bp-num">06</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><path d="M14 14h20l-2 26H16z"/><path d="M19 14V8h10v6"/><path d="M20 22v10M28 22v10"/></svg></div>
+        <div class="bp-name">Gestion <em>des déchets</em></div>
+        <div class="bp-tease">Réduire, trier, valoriser - une île n'a pas le luxe d'enfouir indéfiniment.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=07" class="big-pole">
+        <div class="bp-num">07</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="5"/><circle cx="34" cy="34" r="5"/><path d="M8 30l6-16h18l8 12"/><path d="M20 14v16"/></svg></div>
+        <div class="bp-name">Mobilité <em>durable</em></div>
+        <div class="bp-tease">TCSP, vélo, électrique, maritime - sortir du tout-voiture sur une petite île.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=08" class="big-pole">
+        <div class="bp-num">08</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><path d="M34 14a10 10 0 1 0 0 20"/><path d="M14 34a10 10 0 1 0 0-20"/><path d="M34 14l-4-4M34 14l-4 4M14 34l4 4M14 34l4-4"/></svg></div>
+        <div class="bp-name">Économie <em>circulaire</em></div>
+        <div class="bp-tease">Boucler les flux - matières, énergie, biens - sur un territoire fini.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=09" class="big-pole">
+        <div class="bp-num">09</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><path d="M24 40c0-12-8-20-16-22 0 12 8 20 16 22z"/><path d="M24 40c0-12 8-20 16-22 0 12-8 20-16 22z"/><path d="M24 40V14"/></svg></div>
+        <div class="bp-name">Bio<em>diversité</em></div>
+        <div class="bp-tease">Hotspot mondial, laboratoire vivant - et une pression qui menace toutes les espèces.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=10" class="big-pole">
+        <div class="bp-num">10</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><path d="M6 18l18-8 18 8-18 8z"/><path d="M14 22v10c0 3 4 6 10 6s10-3 10-6V22"/><path d="M42 18v12"/></svg></div>
+        <div class="bp-name">Éducation <em>& sensibilisation</em></div>
+        <div class="bp-tease">Former ceux qui feront la transition - du primaire à la reconversion.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=11" class="big-pole">
+        <div class="bp-num">11</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M8 24h32M24 8c6 4 10 10 10 16s-4 12-10 16c-6-4-10-10-10-16s4-12 10-16z"/></svg></div>
+        <div class="bp-name">Tourisme <em>durable</em></div>
+        <div class="bp-tease">Accueillir sans saturer - un tourisme qui redistribue à la nature et aux habitants.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+      <a href="pole.html?id=12" class="big-pole">
+        <div class="bp-num">12</div>
+        <div class="bp-glyph"><svg viewBox="0 0 48 48"><rect x="10" y="20" width="28" height="16"/><path d="M8 20l16-10 16 10"/><path d="M16 36V24M24 36V24M32 36V24"/></svg></div>
+        <div class="bp-name">Institutions</div>
+        <div class="bp-tease">État, collectivités, agences, chambres - ceux qui conçoivent, financent, accompagnent.</div>
+        <div class="bp-arrow">Lire →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">VALORA</div>
+        <div class="footer-sig">Le Village du développement durable et de l'économie <em>sociale et solidaire.</em></div>
+        <div class="footer-tag">Édition 2027 · Cap Caraïbe · 13-14 mai · Parc Aquabulles, Lamentin</div>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Le village</div>
+        <a href="edition-2027.html">Édition 2027</a>
+        <a href="poles.html">Les 12 pôles</a>
+        <a href="conferences.html">Conférences</a>
+        <a href="caraibe.html">Cap Caraïbe</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Participer</div>
+        <a href="pre-inscription.html">Je viens visiter</a>
+        <a href="pre-inscription.html#exposer">Je veux exposer</a>
+        <a href="mag.html">martinique2050.com</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Association 3ED</div>
+        <a href="#">À propos</a>
+        <a href="#">Mentions légales</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2027 · Association 3ED · Valora</div>
+      <div class="footer-place">Lamentin, Martinique · FWI</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/valora-shared.js?v=3"></script>
+<script src="assets/valora-nav.js?v=3"></script>
+</body>
+</html>

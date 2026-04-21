@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Conférences - Valora 2027</title>
+<link rel="stylesheet" href="assets/valora.css?v=3" />
+<style>
+  /* =================== HERO =================== */
+  .conf-hero {
+    background: var(--canopee-deep); color: var(--ivoire);
+    padding: clamp(64px, 8vw, 112px) 0 clamp(48px, 6vw, 80px);
+    position: relative; overflow: hidden;
+  }
+  .conf-hero::after {
+    content: '';
+    position: absolute; right: -80px; bottom: -80px; width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(255,212,0,.35), transparent 65%);
+    pointer-events: none;
+  }
+  .conf-hero .crumb { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--vert); margin-bottom: 24px; }
+  .conf-hero h1 {
+    font-family: var(--ff-serif); font-weight: 300;
+    font-size: clamp(56px, 9vw, 144px); line-height: .9;
+    letter-spacing: -0.035em; margin-bottom: 32px;
+    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  }
+  .conf-hero h1 em { font-style: italic; color: var(--vert); }
+  .conf-hero .lead { font-family: var(--ff-serif); font-size: clamp(18px, 1.5vw, 22px); font-style: italic; font-weight: 300; max-width: 58ch; line-height: 1.55; opacity: .9; }
+  .conf-hero .meta { margin-top: 36px; display: flex; gap: 32px; flex-wrap: wrap; font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; opacity: .75; }
+  .conf-hero .meta span em { color: var(--vert); font-style: normal; }
+
+  /* =================== FILTERS =================== */
+  .conf-filters {
+    padding: 24px 0; border-bottom: 1px solid var(--line);
+    background: var(--ivoire);
+    position: sticky; top: 70px; z-index: 50;
+    backdrop-filter: blur(14px);
+  }
+  .conf-filters-inner { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+  .filter-label { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; opacity: .55; }
+  .day-toggle { display: flex; gap: 4px; padding: 4px; background: var(--sable); border-radius: 999px; }
+  .day-toggle button {
+    padding: 8px 16px; border-radius: 999px;
+    font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; transition: all .2s;
+  }
+  .day-toggle button.on { background: var(--encre); color: #fff; }
+  .pole-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pole-chip {
+    font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 6px 12px;
+    border: 1px solid var(--line); border-radius: 999px;
+    transition: all .2s; white-space: nowrap;
+  }
+  .pole-chip:hover { border-color: var(--rose); color: var(--rose); }
+  .pole-chip.on { background: var(--rose); color: #fff; border-color: var(--rose); }
+
+  /* =================== FEATURED (KEYNOTE) =================== */
+  .keynote {
+    background: var(--sable); padding: clamp(56px, 6vw, 88px) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .keynote .kicker { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose); margin-bottom: 20px; }
+  .keynote-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: end; }
+  .keynote h2 {
+    font-family: var(--ff-serif); font-weight: 300;
+    font-size: clamp(40px, 5.2vw, 84px); line-height: .95;
+    letter-spacing: -0.03em; margin-bottom: 24px;
+    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  }
+  .keynote h2 em { font-style: italic; color: var(--rose); }
+  .keynote .dek { font-family: var(--ff-serif); font-size: 20px; line-height: 1.55; color: #333; max-width: 52ch; margin-bottom: 28px; font-style: italic; font-weight: 300; }
+  .keynote .when {
+    display: grid; grid-template-columns: auto 1fr; gap: 24px 20px;
+    padding: 24px 28px; background: var(--ivoire); border: 1px solid var(--line); border-radius: 8px;
+    font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .keynote .when strong { font-family: var(--ff-serif); font-size: 18px; font-weight: 400; letter-spacing: -0.01em; text-transform: none; color: var(--encre); }
+  .keynote .when strong em { font-style: italic; color: var(--rose); }
+  .keynote .when .lbl { opacity: .5; }
+
+  .speakers { display: flex; flex-direction: column; gap: 12px; }
+  .speaker {
+    display: grid; grid-template-columns: 56px 1fr;
+    gap: 16px; align-items: center;
+    padding: 14px 18px; background: var(--ivoire); border: 1px solid var(--line); border-radius: 8px;
+  }
+  .speaker .av {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--sable-warm);
+    display: grid; place-items: center;
+    font-family: var(--ff-serif); font-style: italic;
+    font-size: 22px; color: var(--rose);
+  }
+  .speaker.r2 .av { background: #FFE8F3; }
+  .speaker.r3 .av { background: #F0F5D8; color: var(--vert-deep); }
+  .speaker.r4 .av { background: #E7F0F6; color: #3d6d8a; }
+  .speaker .nm { font-family: var(--ff-serif); font-size: 18px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.15; }
+  .speaker .nm em { font-style: italic; color: var(--rose); }
+  .speaker .rl { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; opacity: .6; margin-top: 2px; }
+
+  @media (max-width: 880px) { .keynote-grid { grid-template-columns: 1fr; } }
+
+  /* =================== SESSION LIST =================== */
+  .sessions { padding: clamp(64px, 8vw, 112px) 0; background: var(--ivoire); }
+  .sessions-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+  .sessions-head h2 { font-family: var(--ff-serif); font-size: clamp(28px, 3vw, 44px); font-weight: 300; letter-spacing: -0.02em; }
+  .sessions-head h2 em { font-style: italic; color: var(--rose); }
+  .sessions-head .count { font-family: var(--ff-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: .55; }
+
+  .day-heading {
+    display: flex; align-items: baseline; gap: 16px;
+    margin: 48px 0 24px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--encre);
+  }
+  .day-heading:first-of-type { margin-top: 0; }
+  .day-heading .day-num {
+    font-family: var(--ff-serif); font-size: clamp(40px, 4.5vw, 64px);
+    font-weight: 300; letter-spacing: -0.02em; line-height: 1;
+    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  }
+  .day-heading .day-num em { font-style: italic; color: var(--rose); }
+  .day-heading .day-name { font-family: var(--ff-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; opacity: .6; align-self: end; padding-bottom: 10px; }
+
+  .session-row {
+    display: grid; grid-template-columns: 96px 110px 1fr 200px 140px 40px;
+    gap: 24px; align-items: center;
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+    transition: padding .2s, background .2s;
+    cursor: pointer;
+  }
+  .session-row:hover { padding-left: 12px; background: var(--sable); }
+  .session-row.hidden { display: none; }
+  .sr-time { font-family: var(--ff-mono); font-size: 13px; letter-spacing: 0.08em; font-weight: 500; }
+  .sr-time .dur { display: block; font-size: 10px; opacity: .5; margin-top: 2px; }
+  .sr-pole {
+    font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 10px; background: var(--sable-warm); border-radius: 4px;
+    color: var(--rose); text-align: center;
+    display: inline-block; width: fit-content;
+  }
+  .sr-title { font-family: var(--ff-serif); font-size: clamp(18px, 1.6vw, 22px); font-weight: 400; letter-spacing: -0.01em; line-height: 1.25; max-width: 48ch; }
+  .sr-title em { font-style: italic; color: var(--rose); }
+  .sr-speakers {
+    font-family: var(--ff-serif); font-size: 14px; line-height: 1.4;
+    color: #444; font-style: italic;
+  }
+  .sr-speakers strong { font-style: normal; color: var(--encre); font-weight: 500; }
+  .sr-type {
+    font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; text-align: right;
+    padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px;
+    width: fit-content; justify-self: end;
+  }
+  .sr-type.plenary { border-color: var(--rose); color: var(--rose); }
+  .sr-type.round   { border-color: var(--vert-deep); color: var(--vert-deep); }
+  .sr-type.masterclass { border-color: var(--encre); color: var(--encre); }
+  .sr-type.keynote { border-color: #8B4513; color: #8B4513; }
+  .sr-arrow { font-size: 16px; opacity: .35; transition: all .2s; text-align: right; }
+  .session-row:hover .sr-arrow { opacity: 1; transform: translateX(4px); color: var(--rose); }
+
+  @media (max-width: 1080px) {
+    .session-row { grid-template-columns: 80px 1fr 40px; gap: 16px; }
+    .sr-pole, .sr-speakers, .sr-type { grid-column: 2; }
+    .sr-speakers { opacity: .75; }
+  }
+
+  /* =================== CTA =================== */
+  .cta2 { background: var(--canopee-deep); color: var(--ivoire); padding: clamp(64px, 8vw, 112px) 0; }
+  .cta2-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: center; }
+  .cta2 h2 { font-family: var(--ff-serif); font-size: clamp(36px, 4.4vw, 64px); line-height: 1; font-weight: 300; letter-spacing: -0.02em; font-variation-settings: 'opsz' 144, 'SOFT' 30; }
+  .cta2 h2 em { font-style: italic; color: var(--vert); }
+  .cta2 p { font-family: var(--ff-serif); font-size: 18px; font-style: italic; margin-top: 24px; opacity: .85; max-width: 44ch; line-height: 1.55; }
+  .cta2 .actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+  @media (max-width: 880px) { .cta2-grid { grid-template-columns: 1fr; } .cta2 .actions { justify-content: flex-start; } }
+</style>
+</head>
+<body data-screen-label="Conférences">
+
+<div id="nav-mount"></div>
+
+<!-- ====================== HERO ====================== -->
+<section class="conf-hero">
+  <div class="wrap">
+    <div class="crumb">Accueil · Conférences</div>
+    <h1>Douze<br/><em>conférences</em><br/>pour comprendre<br/>ce qui bouge.</h1>
+    <p class="lead">Sur deux jours, douze grands rendez-vous - plénières, tables rondes, masterclasses - animés par celles et ceux qui font bouger la transition durable en Martinique et dans la Caraïbe. Tout est gratuit, ouvert à tous, traduit simultanément en anglais pour les délégations caribéennes.</p>
+    <div class="meta">
+      <span><em>12</em> · sessions</span>
+      <span><em>38</em> · intervenants</span>
+      <span><em>2</em> · jours · 13-14 mai 2027</span>
+      <span>Grand Amphi · <em>TCSP</em></span>
+      <span>FR / <em>EN</em> - traduction simultanée</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FILTERS ====================== -->
+<section class="conf-filters">
+  <div class="wrap conf-filters-inner">
+    <span class="filter-label">Jour -</span>
+    <div class="day-toggle" id="day-toggle">
+      <button class="on" data-day="all">Les deux</button>
+      <button data-day="13">Jeu. 13</button>
+      <button data-day="14">Ven. 14</button>
+    </div>
+    <span class="filter-label">Pôle -</span>
+    <div class="pole-chips" id="pole-chips">
+      <button class="pole-chip on" data-pole="all">Tous</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== KEYNOTE ====================== -->
+<section class="keynote">
+  <div class="wrap">
+    <div class="kicker">Ouverture · keynote</div>
+    <div class="keynote-grid">
+      <div>
+        <h2>« Ce qui <em>tient</em>,<br/>ce qui <em>casse</em>. »</h2>
+        <p class="dek">Une conversation inaugurale entre trois voix qui connaissent la transition depuis le terrain martiniquais et caribéen. On regarde lucidement ce qui a marché, ce qui échoue - et pourquoi. Aucune langue de bois, c'est promis.</p>
+        <div class="when">
+          <div class="lbl">Jour</div><strong>Jeudi <em>13 mai</em> · 09:30-11:00</strong>
+          <div class="lbl">Lieu</div><strong>Grand Amphi · Tribune Nord</strong>
+          <div class="lbl">Format</div><strong>Plénière d'ouverture · accès libre</strong>
+          <div class="lbl">Langue</div><strong>FR + traduction EN simultanée</strong>
+        </div>
+      </div>
+      <div class="speakers">
+        <div class="speaker">
+          <div class="av">M</div>
+          <div>
+            <div class="nm">Marie-Hélène <em>Léotin</em></div>
+            <div class="rl">Historienne · Martinique 2050</div>
+          </div>
+        </div>
+        <div class="speaker r2">
+          <div class="av">P</div>
+          <div>
+            <div class="nm">Philippe <em>Pied</em></div>
+            <div class="rl">Fondateur · Association 3ED</div>
+          </div>
+        </div>
+        <div class="speaker r3">
+          <div class="av">G</div>
+          <div>
+            <div class="nm">Gerard <em>Alleyne</em></div>
+            <div class="rl">CARPHA · Bridgetown, BB</div>
+          </div>
+        </div>
+        <div class="speaker r4">
+          <div class="av">K</div>
+          <div>
+            <div class="nm">Kédir <em>Kébir</em></div>
+            <div class="rl">Modération · Radio France</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== SESSIONS LIST ====================== -->
+<section class="sessions">
+  <div class="wrap">
+    <div class="sessions-head">
+      <h2>Le <em>programme</em> complet.</h2>
+      <div class="count" id="session-count">12 sessions</div>
+    </div>
+
+    <!-- Day 13 -->
+    <div class="day-heading" data-day="13">
+      <div class="day-num"><em>13</em> mai</div>
+      <div class="day-name">Jeudi · Jour 1</div>
+    </div>
+    <div id="sessions-13"></div>
+
+    <!-- Day 14 -->
+    <div class="day-heading" data-day="14">
+      <div class="day-num"><em>14</em> mai</div>
+      <div class="day-name">Vendredi · Jour 2</div>
+    </div>
+    <div id="sessions-14"></div>
+  </div>
+</section>
+
+<!-- ====================== CTA ====================== -->
+<section class="cta2">
+  <div class="wrap cta2-grid">
+    <div>
+      <h2>Pour assister aux<br/>conférences, <em>un seul pass :</em><br/>la pré-inscription.</h2>
+      <p>Inscription gratuite mais nominative - pour gérer la jauge du Grand Amphi et prévoir la traduction simultanée des sessions bilingues.</p>
+    </div>
+    <div class="actions">
+      <a href="pre-inscription.html?mode=visiter" class="btn-expose">Je garde ma place →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer style="background: var(--encre); color: var(--ivoire); padding: 56px 0 32px;">
+  <div class="wrap" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;">
+    <div>
+      <div style="font-family: var(--ff-serif); font-size: 32px; font-weight: 300; margin-bottom: 12px;">Valora <em style="font-style: italic; color: var(--vert);">2027</em></div>
+      <p style="font-family: var(--ff-serif); font-size: 14px; font-style: italic; opacity: .7; max-width: 32ch;">Le salon de la transition durable en Martinique. 4ᵉ édition - 13 & 14 mai 2027.</p>
+    </div>
+    <div><h4 style="font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--vert); margin-bottom: 16px;">Le Village</h4><ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px;"><li><a href="edition-2027.html" style="color: inherit; opacity: .75;">Édition 2027</a></li><li><a href="pole.html?id=01" style="color: inherit; opacity: .75;">Les 12 pôles</a></li><li><a href="conferences.html" style="color: inherit; opacity: .75;">Conférences</a></li><li><a href="caraibe.html" style="color: inherit; opacity: .75;">Caraïbe</a></li></ul></div>
+    <div><h4 style="font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--vert); margin-bottom: 16px;">En continu</h4><ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px;"><li><a href="mag.html" style="color: inherit; opacity: .75;">martinique2050.com</a></li><li><a href="#" style="color: inherit; opacity: .75;">Bulletin Valora</a></li></ul></div>
+    <div><h4 style="font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--vert); margin-bottom: 16px;">Contact</h4><ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; opacity: .75;"><li>Association 3ED</li><li>Philippe Pied</li><li><a href="mailto:philippepied@gmail.com" style="color: inherit;">philippepied@gmail.com</a></li><li>0696 73 26 26</li></ul></div>
+  </div>
+</footer>
+
+<script src="assets/valora-shared.js?v=3"></script>
+<script src="assets/valora-nav.js?v=3"></script>
+<script src="assets/poles-data.js?v=3"></script>
+<script>
+// ===================== DATA - 12 conférences =====================
+const SESSIONS = [
+  // Jour 1 - 13 mai
+  { day: '13', time: '09:30', dur: '90 min', pole: '00', poleLabel: 'Ouverture', title: '« Ce qui <em>tient</em>, ce qui <em>casse</em>. »', speakers: '<strong>Marie-Hélène Léotin</strong>, <strong>Philippe Pied</strong>, <strong>Gerard Alleyne</strong> · mod. Kédir Kébir', type: 'keynote', typeLabel: 'Keynote' },
+  { day: '13', time: '11:30', dur: '60 min', pole: '01', poleLabel: '01 · Eau', title: 'Réseaux d\'eau : <em>combien de temps</em> pour rattraper le retard ?', speakers: '<strong>Léa Servant</strong> (ODE), <strong>Théo Marius</strong> (Odyssi), <strong>Franck Robinson</strong> (WASCO, LC)', type: 'round', typeLabel: 'Table ronde' },
+  { day: '13', time: '14:00', dur: '90 min', pole: '02', poleLabel: '02 · Énergie', title: '100 % ENR en 2030 - <em>vraiment ?</em>', speakers: '<strong>Dir. EDF Archipel</strong>, <strong>ADEME MQ</strong>, <strong>Dominica Geothermal</strong>', type: 'round', typeLabel: 'Table ronde' },
+  { day: '13', time: '14:00', dur: '60 min', pole: '09', poleLabel: '09 · Biodiversité', title: 'Mangrove, récif, forêt : <em>restaurer</em> à l\'échelle d\'une île.', speakers: '<strong>Parc Naturel Marin</strong>, <strong>ONF Martinique</strong>, <strong>Kalinago Council</strong> (DM)', type: 'masterclass', typeLabel: 'Masterclass' },
+  { day: '13', time: '16:00', dur: '75 min', pole: '05', poleLabel: '05 · Santé env.', title: 'Chlordécone : <em>où en est</em> la recherche, où en est la réparation ?', speakers: '<strong>Pr. Luc Multigner</strong> (INSERM), <strong>ARS Martinique</strong>, <strong>collectif citoyen</strong>', type: 'plenary', typeLabel: 'Plénière' },
+  { day: '13', time: '17:30', dur: '60 min', pole: '04', poleLabel: '04 · Agriculture', title: 'Souveraineté alimentaire : <em>le plan caribéen</em>.', speakers: '<strong>Chambre d\'Agri MQ</strong>, <strong>Min. Agri Barbade</strong>, <strong>CARICOM</strong>', type: 'round', typeLabel: 'Table ronde' },
+
+  // Jour 2 - 14 mai
+  { day: '14', time: '09:00', dur: '75 min', pole: '03', poleLabel: '03 · Construction', title: 'Bâtir en climat tropical - <em>carbone, cyclone, sismique.</em>', speakers: '<strong>Ordre des Architectes</strong>, <strong>CSTB Antilles</strong>, <strong>CAUE</strong>', type: 'masterclass', typeLabel: 'Masterclass' },
+  { day: '14', time: '10:30', dur: '90 min', pole: '07', poleLabel: '07 · Mobilité', title: 'Sortir du tout-voiture : <em>TCSP, vélo, mer.</em>', speakers: '<strong>Martinique Transport</strong>, <strong>CACEM</strong>, <strong>Saint Lucia Public Transport</strong>', type: 'round', typeLabel: 'Table ronde' },
+  { day: '14', time: '11:00', dur: '60 min', pole: '10', poleLabel: '10 · Éducation', title: 'Graine de Valora : <em>former</em> celles et ceux qui feront la transition.', speakers: '<strong>Rectorat</strong>, <strong>CMA Martinique</strong>, <strong>Université des Antilles</strong>', type: 'plenary', typeLabel: 'Plénière' },
+  { day: '14', time: '14:00', dur: '75 min', pole: '06', poleLabel: '06 · Déchets', title: 'Zéro plastique, <em>ça marche</em> ? Retour d\'expérience Barbade.', speakers: '<strong>SMTVD</strong>, <strong>Min. Environment Barbade</strong>, <strong>CITEO</strong>', type: 'round', typeLabel: 'Table ronde' },
+  { day: '14', time: '14:00', dur: '60 min', pole: '11', poleLabel: '11 · Tourisme', title: 'Le tourisme qui <em>redistribue</em> - aux territoires, aux habitants.', speakers: '<strong>CMT</strong>, <strong>Discover Dominica</strong>, <strong>Réseau Écogîtes</strong>', type: 'masterclass', typeLabel: 'Masterclass' },
+  { day: '14', time: '16:00', dur: '90 min', pole: '12', poleLabel: '12 · Institutions', title: 'Clôture : <em>nos engagements</em> pour 2030.', speakers: '<strong>CTM</strong>, <strong>Préfecture</strong>, <strong>Présidents des 3 EPCI</strong>, <strong>Maires</strong>', type: 'plenary', typeLabel: 'Plénière · clôture' }
+];
+
+// ===================== RENDER =====================
+function renderSessions(filter) {
+  const f = filter || { day: 'all', pole: 'all' };
+  const counts = { '13': 0, '14': 0, total: 0 };
+
+  ['13','14'].forEach(day => {
+    const box = document.getElementById('sessions-' + day);
+    const rows = SESSIONS
+      .filter(s => s.day === day)
+      .filter(s => f.pole === 'all' || s.pole === f.pole);
+
+    if ((f.day !== 'all' && f.day !== day) || rows.length === 0) {
+      box.innerHTML = '';
+    } else {
+      box.innerHTML = rows.map(s => `
+        <div class="session-row" data-type="${s.type}">
+          <div class="sr-time">${s.time}<span class="dur">${s.dur}</span></div>
+          <div class="sr-pole">${s.poleLabel}</div>
+          <div class="sr-title">${s.title}</div>
+          <div class="sr-speakers">${s.speakers}</div>
+          <div class="sr-type ${s.type}">${s.typeLabel}</div>
+          <div class="sr-arrow">→</div>
+        </div>
+      `).join('');
+      counts[day] = rows.length;
+      counts.total += rows.length;
+    }
+
+    // Hide day heading if empty or filtered out
+    const heading = document.querySelector(`.day-heading[data-day="${day}"]`);
+    heading.style.display = ((f.day !== 'all' && f.day !== day) || rows.length === 0) ? 'none' : '';
+  });
+
+  document.getElementById('session-count').textContent = counts.total + ' session' + (counts.total > 1 ? 's' : '');
+}
+
+// ===================== POLE CHIPS =====================
+const chips = document.getElementById('pole-chips');
+(window.POLE_ORDER || []).forEach(pid => {
+  const p = (window.POLES_DATA || {})[pid];
+  if (!p) return;
+  const b = document.createElement('button');
+  b.className = 'pole-chip';
+  b.dataset.pole = pid;
+  b.textContent = pid;
+  b.title = p.crumb;
+  chips.appendChild(b);
+});
+
+// ===================== INTERACTIONS =====================
+let state = { day: 'all', pole: 'all' };
+
+document.getElementById('day-toggle').addEventListener('click', e => {
+  const btn = e.target.closest('button'); if (!btn) return;
+  document.querySelectorAll('#day-toggle button').forEach(x => x.classList.remove('on'));
+  btn.classList.add('on');
+  state.day = btn.dataset.day;
+  renderSessions(state);
+});
+
+chips.addEventListener('click', e => {
+  const btn = e.target.closest('button'); if (!btn) return;
+  chips.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+  btn.classList.add('on');
+  state.pole = btn.dataset.pole;
+  renderSessions(state);
+});
+
+// Initial render
+renderSessions(state);
+</script>
+</body>
+</html>

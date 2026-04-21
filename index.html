@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Valora 2027 — 4ᵉ Village du développement durable · Martinique</title>
+<title>Valora 2027 - 4ᵉ Village du développement durable · Martinique</title>
 <link rel="stylesheet" href="assets/valora.css?v=3" />
 <style>
   .hero {
@@ -97,10 +97,13 @@
   /* Valora logo in the sun area of the hero image */
   .hero-sun-logo {
     position: absolute; z-index: 3;
-    top: 6%; left: 4%;
-    width: 46%;
-    max-width: 440px;
-    filter: drop-shadow(0 4px 20px rgba(255,200,80,.4));
+    top: 2%; left: 3%;
+    width: 66%;
+    max-width: 640px;
+    filter:
+      drop-shadow(0 6px 14px rgba(0,0,0,.35))
+      drop-shadow(0 2px 4px rgba(0,0,0,.25))
+      drop-shadow(0 0 24px rgba(255,200,80,.5));
     animation: sunFloat 6s ease-in-out infinite;
   }
   @keyframes sunFloat { 50% { transform: translateY(-6px); } }
@@ -113,7 +116,99 @@
     box-shadow: 0 12px 40px rgba(0,0,0,.2);
   }
   .hero-bubble.b { bottom: 120px; right: 32px; background: #fff; color: var(--rose); font-weight: 500; }
-  .hero-bubble.c { bottom: 40px; right: 32px; background: var(--jaune); color: var(--encre); padding: 10px 18px; font-size: 14px; font-family: var(--ff-mono); font-style: normal; letter-spacing: .1em; text-transform: uppercase;}
+  .hero-bubble.c { bottom: 40px; right: 32px; background: var(--jaune); color: var(--encre); padding: 10px 18px; font-size: 14px; font-family: var(--ff-mono); font-style: normal; letter-spacing: .1em;
+    text-transform: uppercase; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+
+  /* Manifesto strip over hero — replaces the old "Valorisons ensemble" bubble */
+  .hero-manifesto-wrap {
+    position: absolute; z-index: 3;
+    bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center;
+    gap: 10px;
+    max-width: calc(100% - 48px);
+  }
+  .hero-manifesto {
+    display: flex; align-items: center; justify-content: center;
+    gap: clamp(14px, 2.2vw, 32px);
+    padding: 14px 32px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 999px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.6) inset;
+    font-family: var(--ff-serif);
+    font-size: clamp(20px, 2.6vw, 38px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    color: var(--encre);
+  }
+  .hero-manifesto-tag {
+    font-family: var(--ff-mono);
+    font-size: 13px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--encre);
+    background: var(--jaune);
+    padding: 7px 16px;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    font-weight: 500;
+  }
+  .hero-manifesto-tag em {
+    font-style: italic;
+    font-family: var(--ff-serif);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .hero-manifesto .hm-word {
+    display: inline-block;
+    font-style: italic;
+    line-height: 1;
+    padding-bottom: 2px; /* gives italic descenders breathing room without taller box */
+    background: linear-gradient(180deg, var(--rose) 0%, var(--rose-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .hero-manifesto .hm-word:nth-child(3) {
+    background: linear-gradient(180deg, var(--canopee) 0%, var(--vert-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-manifesto .hm-word:nth-child(5) {
+    background: linear-gradient(180deg, #FFC107 0%, #E69A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-manifesto .hm-dot {
+    display: inline-block;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--encre); opacity: .35;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  @media (max-width: 900px) {
+    .hero-manifesto-wrap {
+      bottom: auto; top: calc(100% + 16px);
+      position: relative; left: auto; transform: none;
+      margin: 16px auto 0;
+    }
+    .hero-manifesto {
+      white-space: normal; text-align: center;
+      flex-wrap: wrap; justify-content: center;
+      padding: 12px 18px;
+      font-size: 16px;
+    }
+    .hero-manifesto .hm-dot { width: 5px; height: 5px; }
+  } text-transform: uppercase;}
 
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; min-height: auto; }
@@ -145,8 +240,8 @@
   @media (max-width: 880px) { .intro-grid { grid-template-columns: 1fr; } }
 
   /* ===== STATS ===== */
-  .stats { padding: clamp(64px, 8vw, 112px) 0; background: var(--ivoire); }
-  .stats-head { margin-bottom: 48px; }
+  .stats { padding: clamp(40px, 5vw, 64px) 0; background: var(--ivoire); }
+  .stats-head { margin-bottom: 32px; }
   .stats-head h3 {
     font-family: var(--ff-serif);
     font-size: clamp(28px, 3vw, 44px); font-weight: 300;
@@ -177,8 +272,8 @@
   }
 
   /* ===== POLES ===== */
-  .poles { background: var(--sable); padding: clamp(80px, 10vw, 140px) 0; }
-  .poles-head { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; margin-bottom: 48px; align-items: end; }
+  .poles { background: var(--sable); padding: clamp(44px, 5vw, 72px) 0; }
+  .poles-head { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; margin-bottom: 32px; align-items: end; }
   .poles-head h2 {
     font-family: var(--ff-serif);
     font-size: clamp(44px, 6vw, 96px); font-weight: 300;
@@ -189,31 +284,33 @@
     font-family: var(--ff-serif); font-size: 18px; font-style: italic;
     font-weight: 300; max-width: 46ch; color: #333;
   }
-  .poles-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .poles-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
   .pole {
-    aspect-ratio: 1 / 1.05;
+    min-height: 96px;
     border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    display: grid !important; grid-template-columns: 44px 40px 1fr auto; align-items: center; gap: 14px;
     padding: 20px; background: var(--ivoire);
     display: flex; flex-direction: column; justify-content: space-between;
     transition: all .3s; cursor: pointer; position: relative; overflow: hidden;
   }
   .pole:hover { background: var(--rose); color: #fff; }
-  .pole-num { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.14em; opacity: .55; }
+  .pole-num { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.14em; opacity: .55; align-self: center; }
   .pole:hover .pole-num { opacity: .9; color: var(--vert); }
-  .pole-glyph { width: 56px; height: 56px; margin: 8px 0; }
-  .pole-glyph svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.2; }
+  .pole-glyph { width: 32px; height: 32px; }
+  .pole-glyph svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.4; }
   .pole-name {
-    font-family: var(--ff-serif); font-size: clamp(19px, 1.8vw, 26px);
-    line-height: 1.05; letter-spacing: -0.015em; font-weight: 400;
+    font-family: var(--ff-serif); font-size: clamp(16px, 1.35vw, 20px);
+    line-height: 1.1; letter-spacing: -0.01em; font-weight: 400;
   }
   .pole-name em { font-style: italic; color: var(--rose); }
   .pole:hover .pole-name em { color: var(--vert); }
-  .pole-arrow { margin-top: 12px; opacity: 0; transform: translateX(-4px); transition: all .3s; font-size: 14px; color: var(--vert); }
+  .pole-arrow { margin-top: 0; opacity: 0; transform: translateX(-4px); transition: all .3s; font-size: 13px; color: var(--vert); }
   .pole:hover .pole-arrow { opacity: 1; transform: translateX(0); }
-  @media (max-width: 880px) { .poles-head { grid-template-columns: 1fr; } .poles-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 880px) { .poles-head { grid-template-columns: 1fr; } .poles-grid { grid-template-columns: repeat(2, 1fr); } .pole { grid-template-columns: 36px 28px 1fr; } }
+  @media (max-width: 520px) { .poles-grid { grid-template-columns: 1fr; } }
 
   /* ===== CARIB ===== */
-  .carib { background: var(--canopee); color: #fff; padding: clamp(80px, 10vw, 140px) 0; position: relative; overflow: hidden; }
+  .carib { background: var(--canopee); color: #fff; padding: clamp(52px, 6vw, 84px) 0; position: relative; overflow: hidden; }
   .carib::before {
     content: ''; position: absolute; right: -15%; top: -15%;
     width: 600px; height: 600px;
@@ -260,7 +357,7 @@
   @media (max-width: 880px) { .carib-grid { grid-template-columns: 1fr; } }
 
   /* ===== PROG ===== */
-  .programme { background: var(--ivoire); padding: clamp(80px, 10vw, 140px) 0; }
+  .programme { background: var(--ivoire); padding: clamp(52px, 6vw, 84px) 0; }
   .programme h2 {
     font-family: var(--ff-serif);
     font-size: clamp(44px, 5.5vw, 88px); line-height: .98;
@@ -293,7 +390,7 @@
   }
 
   /* ===== NL ===== */
-  .newsletter { background: var(--rose); color: #fff; padding: clamp(64px, 8vw, 112px) 0; }
+  .newsletter { background: var(--rose); color: #fff; padding: clamp(48px, 6vw, 80px) 0; }
   .nl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
   .nl-grid h3 {
     font-family: var(--ff-serif);
@@ -321,29 +418,7 @@
 </head>
 <body data-screen-label="Accueil">
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <img src="assets/valora-logo.png" alt="Valora" />
-      <span class="tag">2027</span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html" class="active">Accueil</a>
-      <a href="edition-2027.html">Édition 2027</a>
-      <a href="pole.html?id=01">Pôles</a>
-      <a href="caraibe.html">Caraïbe</a>
-      <a href="mag.html">Le Mag</a>
-      <a href="#">À propos</a>
-    </div>
-    <div class="nav-right">
-      <div class="countdown-mini" title="13 mai 2027">
-        <span class="dot"></span><span data-countdown="hours">—</span><span style="opacity:.5;">avant Valora</span>
-      </div>
-      <div class="lang"><button class="on" data-lang="FR">FR</button><button data-lang="EN">EN</button></div>
-      <a href="pre-inscription.html" class="btn-rose">Pré-inscription →</a>
-    </div>
-  </div>
-</nav>
+<div id="nav-mount"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -355,7 +430,7 @@
       <span>Martinique · Caraïbe</span>
     </div>
     <h1>La transition<br/><em>se fabrique</em><br/>ici <span class="year">·2027</span></h1>
-    <p class="hero-sub">Deux jours pour comprendre, rencontrer et agir. Une Martinique qui se connecte à la Caraïbe sur l'écologie, l'eau, l'énergie, l'économie circulaire — avec des visages, des solutions, des preuves.</p>
+    <p class="hero-sub">Deux jours pour comprendre, rencontrer et agir. Une Martinique qui se connecte à la Caraïbe sur l'écologie, l'eau, l'énergie, l'économie circulaire - avec des visages, des solutions, des preuves.</p>
     <div class="hero-meta">
       <div><div class="k">Dates</div><div class="v">13 + 14 <em>mai 2027</em></div></div>
       <div><div class="k">Lieu</div><div class="v">Hippodrome <em>de Carrère</em><br/>Le Lamentin</div></div>
@@ -369,8 +444,16 @@
   <div class="hero-right">
     <div class="hero-img"></div>
     <img src="assets/valora-logo.png" alt="Valora" class="hero-sun-logo" />
-    <div class="hero-bubble b">« Valorisons ensemble »</div>
-    <div class="hero-bubble c">Entrée gratuite</div>
+    <div class="hero-manifesto-wrap">
+      <div class="hero-manifesto">
+        <span class="hm-word">Économiser</span>
+        <span class="hm-dot" aria-hidden="true"></span>
+        <span class="hm-word">(Se) Protéger</span>
+        <span class="hm-dot" aria-hidden="true"></span>
+        <span class="hm-word">Valoriser</span>
+      </div>
+      <div class="hero-manifesto-tag">Entrée gratuite</div>
+    </div>
   </div>
 </section>
 
@@ -401,8 +484,8 @@
         <h2>Le <em>rendez-vous</em><br/>de la transition<br/>écologique en<br/><em>Martinique.</em></h2>
       </div>
       <div class="intro-right">
-        <p>Valora est la 4ᵉ édition du Village du Développement durable, de l'économie circulaire, sociale et solidaire en Martinique — porté par <em>l'Association 3ED</em> depuis 2016. Trois éditions, une base fidèle d'exposants, une certitude : l'écologie se joue d'abord à l'échelle d'un territoire et de ses voisins.</p>
-        <p>En 2027, Valora change d'échelle. Nouveau lieu, plus spacieux. Vocation caribéenne assumée avec les délégations invitées de la <em>Barbade</em>, de <em>Sainte-Lucie</em> et de la <em>Dominique</em>. Et un site qui ne s'éteint plus entre deux éditions — martinique2050.com publie chaque mois des solutions concrètes, des visages, des preuves.</p>
+        <p>Valora est la 4ᵉ édition du Village du Développement durable, de l'économie circulaire, sociale et solidaire en Martinique - porté par <em>l'Association 3ED</em> depuis 2016. Trois éditions, une base fidèle d'exposants, une certitude : l'écologie se joue d'abord à l'échelle d'un territoire et de ses voisins.</p>
+        <p>En 2027, Valora change d'échelle. Nouveau lieu, plus spacieux. Vocation caribéenne assumée avec les délégations invitées de la <em>Barbade</em>, de <em>Sainte-Lucie</em> et de la <em>Dominique</em>. Et un site qui ne s'éteint plus entre deux éditions - martinique2050.com publie chaque mois des solutions concrètes, des visages, des preuves.</p>
       </div>
     </div>
   </div>
@@ -417,9 +500,9 @@
     </div>
     <div class="stats-grid">
       <div class="stat"><div class="num">12<span class="suf">pôles</span></div><div class="label">Thématiques de la transition, de l'eau à l'économie circulaire</div></div>
-      <div class="stat"><div class="num"><em>80</em>+</div><div class="label">Exposants attendus en 2027</div></div>
-      <div class="stat"><div class="num">3<span class="suf">pays</span></div><div class="label">Invités de la Caraïbe — Barbade, Sainte-Lucie, Dominique</div></div>
-      <div class="stat"><div class="num"><em>20k</em></div><div class="label">Visiteurs attendus sur les deux journées</div></div>
+      <div class="stat"><div class="num"><em>120</em>+</div><div class="label">Exposants attendus en 2027</div></div>
+      <div class="stat"><div class="num">3<span class="suf">pays</span></div><div class="label">Invités de la Caraïbe - Barbade, Sainte-Lucie, Dominique</div></div>
+      <div class="stat"><div class="num"><em>10k</em></div><div class="label">Visiteurs attendus sur les deux journées</div></div>
     </div>
   </div>
 </section>
@@ -435,18 +518,18 @@
       <p>Chaque pôle réunit les acteurs locaux, les chiffres-clés Martinique et les solutions testées sur le terrain. Les articles du Mag et les exposants se rattachent à ces douze thématiques, qui forment la colonne vertébrale du Village et du site.</p>
     </div>
     <div class="poles-grid">
-      <a href="pole.html?id=01" class="pole"><div><div class="pole-num">01 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M24 8c-7 10-11 16-11 22a11 11 0 1 0 22 0c0-6-4-12-11-22z"/><path d="M18 28c0 4 2 7 6 8"/></svg></div><div><div class="pole-name">Eau <em>&</em> Air</div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=02" class="pole"><div><div class="pole-num">02 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M28 6 14 26h10l-4 16 14-20H24l4-16z"/></svg></div><div><div class="pole-name">Énergie</div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=03" class="pole"><div><div class="pole-num">03 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M24 40c0-12-8-20-16-22 0 12 8 20 16 22z"/><path d="M24 40c0-12 8-20 16-22 0 12-8 20-16 22z"/><path d="M24 40V14"/></svg></div><div><div class="pole-name">Bio<em>diversité</em></div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=04" class="pole"><div><div class="pole-num">04 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M8 36h32"/><path d="M14 36V24c0-4 4-7 10-7s10 3 10 7v12"/><path d="M20 20v-6M28 20v-6"/></svg></div><div><div class="pole-name">Agriculture <em>durable</em></div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=05" class="pole"><div><div class="pole-num">05 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M10 38V18l14-10 14 10v20"/><path d="M20 38V26h8v12"/></svg></div><div><div class="pole-name">Patrimoine</div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=06" class="pole"><div><div class="pole-num">06 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="5"/><circle cx="34" cy="34" r="5"/><path d="M8 30l6-16h18l8 12"/><path d="M20 14v16"/></svg></div><div><div class="pole-name">Mobilité</div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=07" class="pole"><div><div class="pole-num">07 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M14 14h20l-2 26H16z"/><path d="M19 14V8h10v6"/><path d="M20 22v10M28 22v10"/></svg></div><div><div class="pole-name">Déchets</div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=08" class="pole"><div><div class="pole-num">08 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M8 24h32M24 8c6 4 10 10 10 16s-4 12-10 16c-6-4-10-10-10-16s4-12 10-16z"/></svg></div><div><div class="pole-name">Tourisme <em>durable</em></div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=09" class="pole"><div><div class="pole-num">09 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M24 8l16 28H8z"/><path d="M24 20v10M24 32v1"/></svg></div><div><div class="pole-name">Risques <em>& sargasses</em></div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=10" class="pole"><div><div class="pole-num">10 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M34 14a10 10 0 1 0 0 20"/><path d="M14 34a10 10 0 1 0 0-20"/><path d="M34 14l-4-4M34 14l-4 4M14 34l4 4M14 34l4-4"/></svg></div><div><div class="pole-name">Économie <em>circulaire</em></div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=11" class="pole"><div><div class="pole-num">11 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M6 18l18-8 18 8-18 8z"/><path d="M14 22v10c0 3 4 6 10 6s10-3 10-6V22"/><path d="M42 18v12"/></svg></div><div><div class="pole-name">Éducation <em>& formation</em></div><div class="pole-arrow">Lire →</div></div></a>
-      <a href="pole.html?id=12" class="pole"><div><div class="pole-num">12 · Pôle</div></div><div class="pole-glyph"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="6"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M10 38l4-4M34 14l4-4"/></svg></div><div><div class="pole-name">Climat</div><div class="pole-arrow">Lire →</div></div></a>
+      <a href="pole.html?id=01" class="pole"><div class="pole-num">01</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M24 8c-7 10-11 16-11 22a11 11 0 1 0 22 0c0-6-4-12-11-22z"/><path d="M18 28c0 4 2 7 6 8"/></svg></div><div class="pole-name">Eau <em>&</em> Assainissement</div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=02" class="pole"><div class="pole-num">02</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M28 6 14 26h10l-4 16 14-20H24l4-16z"/></svg></div><div class="pole-name">Énergie <em>&</em> Transition</div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=03" class="pole"><div class="pole-num">03</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M10 38V18l14-10 14 10v20"/><path d="M20 38V26h8v12"/></svg></div><div class="pole-name">Construction <em>durable</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=04" class="pole"><div class="pole-num">04</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M8 36h32"/><path d="M14 36V24c0-4 4-7 10-7s10 3 10 7v12"/><path d="M20 20v-6M28 20v-6"/></svg></div><div class="pole-name">Agriculture <em>durable</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=05" class="pole"><div class="pole-num">05</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 10v28M10 24h28"/></svg></div><div class="pole-name">Santé <em>environnementale</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=06" class="pole"><div class="pole-num">06</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M14 14h20l-2 26H16z"/><path d="M19 14V8h10v6"/><path d="M20 22v10M28 22v10"/></svg></div><div class="pole-name">Gestion <em>des déchets</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=07" class="pole"><div class="pole-num">07</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><circle cx="14" cy="34" r="5"/><circle cx="34" cy="34" r="5"/><path d="M8 30l6-16h18l8 12"/><path d="M20 14v16"/></svg></div><div class="pole-name">Mobilité <em>durable</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=08" class="pole"><div class="pole-num">08</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M34 14a10 10 0 1 0 0 20"/><path d="M14 34a10 10 0 1 0 0-20"/><path d="M34 14l-4-4M34 14l-4 4M14 34l4 4M14 34l4-4"/></svg></div><div class="pole-name">Économie <em>circulaire</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=09" class="pole"><div class="pole-num">09</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M24 40c0-12-8-20-16-22 0 12 8 20 16 22z"/><path d="M24 40c0-12 8-20 16-22 0 12-8 20-16 22z"/><path d="M24 40V14"/></svg></div><div class="pole-name">Bio<em>diversité</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=10" class="pole"><div class="pole-num">10</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><path d="M6 18l18-8 18 8-18 8z"/><path d="M14 22v10c0 3 4 6 10 6s10-3 10-6V22"/><path d="M42 18v12"/></svg></div><div class="pole-name">Éducation <em>& sensibilisation</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=11" class="pole"><div class="pole-num">11</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M8 24h32M24 8c6 4 10 10 10 16s-4 12-10 16c-6-4-10-10-10-16s4-12 10-16z"/></svg></div><div class="pole-name">Tourisme <em>durable</em></div><div class="pole-arrow">→</div></a>
+      <a href="pole.html?id=12" class="pole"><div class="pole-num">12</div><div class="pole-glyph"><svg viewBox="0 0 48 48"><rect x="10" y="20" width="28" height="16"/><path d="M8 20l16-10 16 10"/><path d="M16 36V24M24 36V24M32 36V24"/></svg></div><div class="pole-name">Institutions</div><div class="pole-arrow">→</div></a>
     </div>
   </div>
 </section>
@@ -458,7 +541,7 @@
       <div>
         <div class="eyebrow"><span class="bar"></span>L'édition 2027 · Cap Caraïbe</div>
         <h2>Une île ne<br/>se transitionne<br/>pas seule.<br/><em>On avance<br/>ensemble.</em></h2>
-        <p>Pour la première fois, Valora accueille trois délégations officielles de la Caraïbe. Des problèmes communs — sargasses, eau, énergie, tourisme — et des solutions qui voyagent mieux entre voisins qu'à travers l'Atlantique.</p>
+        <p>Pour la première fois, Valora accueille trois délégations officielles de la Caraïbe. Des problèmes communs - sargasses, eau, énergie, tourisme - et des solutions qui voyagent mieux entre voisins qu'à travers l'Atlantique.</p>
         <a href="caraibe.html" class="btn-lime" style="margin-top:28px; background: var(--vert); color: var(--encre);">Découvrir la dimension caribéenne →</a>
       </div>
       <div class="delegations">
@@ -475,12 +558,12 @@
   <div class="wrap">
     <div class="eyebrow"><span class="bar"></span>Le programme · Un extrait</div>
     <h2>Deux jours,<br/><em>180 rendez-vous.</em></h2>
-    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Jeu. 13 mai</span>09:30</div><div class="prog-title">Ouverture officielle — <em>un archipel qui transitionne</em></div><div class="prog-tag conf">Conférence</div><div class="prog-arrow">→</div></a>
-    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Jeu. 13 mai</span>11:00</div><div class="prog-title">Sargasses : de la nuisance à la ressource — table ronde caribéenne</div><div class="prog-tag conf">Conférence</div><div class="prog-arrow">→</div></a>
-    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Jeu. 13 mai</span>14:00</div><div class="prog-title">Atelier — fabriquer son composteur domestique à partir de palettes</div><div class="prog-tag atelier">Atelier</div><div class="prog-arrow">→</div></a>
-    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Jeu. 13 mai</span>16:00</div><div class="prog-title">Démo — <em>véhicule solaire autonome</em>, prototype Martinique/Barbade</div><div class="prog-tag demo">Démo</div><div class="prog-arrow">→</div></a>
-    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Ven. 14 mai</span>10:00</div><div class="prog-title">Job-dating — <em>120 emplois verts</em> à pourvoir cette année</div><div class="prog-tag job">Job-dating</div><div class="prog-arrow">→</div></a>
-    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Ven. 14 mai</span>14:30</div><div class="prog-title">Clôture — feuille de route OECS-Martinique 2027-2030</div><div class="prog-tag conf">Conférence</div><div class="prog-arrow">→</div></a>
+    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Jeu. 13 mai</span>09:30</div><div class="prog-title">Ouverture officielle - <em>un archipel qui transitionne</em></div><div class="prog-tag conf">Conférence</div><div class="prog-arrow">→</div></a>
+    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Jeu. 13 mai</span>11:00</div><div class="prog-title">Sargasses : de la nuisance à la ressource - table ronde caribéenne</div><div class="prog-tag conf">Conférence</div><div class="prog-arrow">→</div></a>
+    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Jeu. 13 mai</span>14:00</div><div class="prog-title">Atelier - fabriquer son composteur domestique à partir de palettes</div><div class="prog-tag atelier">Atelier</div><div class="prog-arrow">→</div></a>
+    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Jeu. 13 mai</span>16:00</div><div class="prog-title">Démo - <em>véhicule solaire autonome</em>, prototype Martinique/Barbade</div><div class="prog-tag demo">Démo</div><div class="prog-arrow">→</div></a>
+    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Ven. 14 mai</span>10:00</div><div class="prog-title">Job-dating - <em>120 emplois verts</em> à pourvoir cette année</div><div class="prog-tag job">Job-dating</div><div class="prog-arrow">→</div></a>
+    <a href="edition-2027.html" class="prog-row"><div class="prog-time"><span class="day">Ven. 14 mai</span>14:30</div><div class="prog-title">Clôture - feuille de route OECS-Martinique 2027-2030</div><div class="prog-tag conf">Conférence</div><div class="prog-arrow">→</div></a>
     <div class="prog-more">
       <a href="edition-2027.html" class="btn-primary">Programme complet →</a>
       <span style="font-family:var(--ff-mono); font-size:12px; opacity:.55; letter-spacing:.1em;">PDF téléchargeable · 24 pages</span>
@@ -518,17 +601,18 @@
         <p style="opacity:.6; font-size:12px; margin-top:16px; font-family: var(--ff-mono); letter-spacing: .1em; text-transform: uppercase;">Propriété de l'Association 3ED</p>
       </div>
       <div><h4>Le Village</h4><ul><li><a href="edition-2027.html">Édition 2027</a></li><li><a href="#">Les 12 pôles</a></li><li><a href="caraibe.html">Caraïbe</a></li><li><a href="#">Éditions passées</a></li><li><a href="#">Exposer</a></li><li><a href="#">Scolaires</a></li></ul></div>
-      <div><h4>En continu</h4><ul><li><a href="mag.html">Le Mag</a></li><li><a href="#">Bulletin Valora</a></li><li><a href="#">Podcast</a></li><li><a href="#">Presse</a></li><li><a href="#">martinique2050.com</a></li></ul></div>
+      <div><h4>En continu</h4><ul><li><a href="mag.html">martinique2050.com</a></li><li><a href="#">Bulletin Valora</a></li><li><a href="#">Podcast</a></li><li><a href="#">Presse</a></li></ul></div>
       <div><h4>Contact</h4><ul><li>Association 3ED</li><li>Philippe Pied · fondateur</li><li><a href="mailto:philippepied@gmail.com">philippepied@gmail.com</a></li><li>0696 73 26 26</li></ul></div>
     </div>
     <div class="footer-bottom">
-      <span>© 2016–2027 Association 3ED · Fort-de-France · Martinique</span>
+      <span>© 2016-2027 Association 3ED · Fort-de-France · Martinique</span>
       <span>Mentions légales · Confidentialité</span>
     </div>
   </div>
 </footer>
 
-<script src="assets/valora-shared.js"></script>
+<script src="assets/valora-shared.js?v=3"></script>
+<script src="assets/valora-nav.js?v=3"></script>
 <script>
 // Marquee mount
 const mq = document.getElementById('marquee');

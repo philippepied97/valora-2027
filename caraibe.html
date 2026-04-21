@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Caraïbe — Valora 2027</title>
+<title>Caraïbe - Valora 2027</title>
 <link rel="stylesheet" href="assets/valora.css?v=3" />
 <style>
   .c-hero {
@@ -175,30 +175,13 @@
 </head>
 <body data-screen-label="Caraïbe">
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="logo"><img src="assets/valora-logo.png" alt="Valora"/><span class="tag">2027</span></a>
-    <div class="nav-links">
-      <a href="index.html">Accueil</a>
-      <a href="edition-2027.html">Édition 2027</a>
-      <a href="pole.html?id=01">Pôles</a>
-      <a href="caraibe.html" class="active">Caraïbe</a>
-      <a href="mag.html">Le Mag</a>
-      <a href="#">À propos</a>
-    </div>
-    <div class="nav-right">
-      <div class="countdown-mini"><span class="dot"></span><span data-countdown="hours">—</span><span style="opacity:.5;">avant Valora</span></div>
-      <div class="lang"><button class="on" data-lang="FR">FR</button><button data-lang="EN">EN</button></div>
-      <a href="pre-inscription.html" class="btn-rose">Pré-inscription →</a>
-    </div>
-  </div>
-</nav>
+<div id="nav-mount"></div>
 
 <section class="c-hero">
   <div class="wrap">
     <div class="crumb">Accueil · Caraïbe</div>
     <h1>Cap<br/><em>Caraïbe</em>,<br/>édition 2027.</h1>
-    <p class="lead">Pour la première fois, Valora ouvre officiellement ses portes aux délégations de la Barbade, de Sainte-Lucie et de la Dominique. Une manière d'assumer ce que nos territoires vivent depuis toujours — des problèmes communs, des solutions qui voyagent mieux entre voisins qu'à travers l'Atlantique.</p>
+    <p class="lead">Pour la première fois, Valora ouvre officiellement ses portes aux délégations de la Barbade, de Sainte-Lucie et de la Dominique. Une manière d'assumer ce que nos territoires vivent depuis toujours - des problèmes communs, des solutions qui voyagent mieux entre voisins qu'à travers l'Atlantique.</p>
   </div>
 </section>
 
@@ -227,7 +210,7 @@
             <text x="250" y="162" font-family="JetBrains Mono" font-size="9" letter-spacing="1.5" fill="#B8563A">ROSEAU · +1 767</text>
           </g>
 
-          <!-- Martinique (center — home) -->
+          <!-- Martinique (center - home) -->
           <g class="island home" onclick="pick('martinique')">
             <path d="M165 225 Q 195 210 225 225 Q 245 245 235 275 Q 225 295 200 300 Q 170 295 160 270 Q 155 245 165 225 Z" fill="#0E3B2E"/>
             <text x="250" y="255" font-family="Fraunces" font-style="italic" font-size="20" fill="#0E3B2E">Martinique</text>
@@ -315,14 +298,15 @@
         <p style="opacity:.7; font-size:14px; max-width:36ch;">4ᵉ Village du développement durable de Martinique.</p>
       </div>
       <div><h4>Le Village</h4><ul><li><a href="edition-2027.html">Édition 2027</a></li><li><a href="caraibe.html">Caraïbe</a></li></ul></div>
-      <div><h4>En continu</h4><ul><li><a href="mag.html">Le Mag</a></li></ul></div>
+      <div><h4>En continu</h4><ul><li><a href="mag.html">martinique2050.com</a></li></ul></div>
       <div><h4>Contact</h4><ul><li><a href="mailto:bonjour@valora.mq">bonjour@valora.mq</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>© 2016–2027 Association 3ED</span><span>Mentions · Confidentialité</span></div>
+    <div class="footer-bottom"><span>© 2016-2027 Association 3ED</span><span>Mentions · Confidentialité</span></div>
   </div>
 </footer>
 
-<script src="assets/valora-shared.js"></script>
+<script src="assets/valora-shared.js?v=3"></script>
+<script src="assets/valora-nav.js?v=3"></script>
 <script>
 const delegations = {
   martinique: {
@@ -339,7 +323,7 @@ const delegations = {
     italic: 'Bridgetown',
     tagline: "Pionnière du solaire thermique dans la Caraïbe.",
     facts: { Population: '282 000', Capitale: 'Bridgetown', Superficie: '430 km²', Délégués: '12' },
-    focus: "Reconnu comme leader régional sur la gestion de l'eau pluviale et le solaire thermique résidentiel — 70 % des foyers équipés."
+    focus: "Reconnu comme leader régional sur la gestion de l'eau pluviale et le solaire thermique résidentiel - 70 % des foyers équipés."
   },
   lucie: {
     tag: 'Délégation invitée · 6 exposants',
@@ -355,7 +339,7 @@ const delegations = {
     italic: 'Roseau',
     tagline: "Objectif 100 % renouvelables en 2030.",
     facts: { Population: '72 000', Capitale: 'Roseau', Superficie: '750 km²', Délégués: '7' },
-    focus: "La géothermie couvre déjà 3 % du mix, passera à 40 % d'ici 2028 avec la centrale de Laudat — un modèle observé de près par ses voisins."
+    focus: "La géothermie couvre déjà 3 % du mix, passera à 40 % d'ici 2028 avec la centrale de Laudat - un modèle observé de près par ses voisins."
   }
 };
 function pick(key) {

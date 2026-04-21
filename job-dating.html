@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Job Dating - Valora 2027</title>
+<link rel="stylesheet" href="assets/valora.css?v=3" />
+<style>
+  /* ---------- Hero ---------- */
+  .jd-hero {
+    background: var(--canopee); color: var(--ivoire);
+    padding: 72px 0 56px;
+    position: relative; overflow: hidden;
+  }
+  .jd-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 85% 20%, rgba(184,211,50,.18), transparent 40%),
+      radial-gradient(circle at 15% 90%, rgba(230,0,126,.12), transparent 45%);
+    pointer-events: none;
+  }
+  .jd-hero .wrap { position: relative; z-index: 1; }
+  .jd-hero .crumb {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--vert); margin-bottom: 28px;
+  }
+  .jd-hero h1 {
+    font-size: clamp(48px, 9vw, 128px);
+    font-weight: 300; line-height: 1.02;
+    letter-spacing: -0.035em; margin-bottom: 40px;
+    max-width: 14ch;
+  }
+  .jd-hero h1 em { font-style: italic; color: var(--vert); }
+  .jd-hero .lead {
+    font-family: var(--ff-serif);
+    font-size: clamp(18px, 1.6vw, 24px);
+    font-style: italic; font-weight: 300;
+    max-width: 58ch; opacity: .95; line-height: 1.4;
+    margin-bottom: 40px;
+  }
+  .jd-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 32px; margin-top: 48px;
+    border-top: 1px solid rgba(255,255,255,.15);
+    padding-top: 32px;
+  }
+  .jd-stat .num {
+    font-family: var(--ff-serif);
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300; line-height: 1;
+    color: var(--vert); letter-spacing: -0.03em;
+  }
+  .jd-stat .num em { font-style: italic; }
+  .jd-stat .lbl {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    opacity: .7; margin-top: 10px;
+  }
+
+  /* ---------- Meta bar ---------- */
+  .jd-meta {
+    background: var(--canopee-deep); color: var(--ivoire);
+    padding: 20px 0;
+    font-family: var(--ff-mono); font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .jd-meta .wrap {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .jd-meta .dot {
+    display: inline-block; width: 6px; height: 6px;
+    background: var(--vert); border-radius: 50%;
+    margin-right: 10px; vertical-align: middle;
+  }
+  .jd-meta a { color: var(--vert); }
+
+  /* ---------- Section ---------- */
+  .jd-section { padding: 80px 0; }
+  .jd-section.sable { background: var(--sable); }
+  .jd-section .sec-eyebrow {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 18px;
+  }
+  .jd-section h2 {
+    font-family: var(--ff-serif);
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 300; line-height: 1.05;
+    letter-spacing: -0.025em;
+    max-width: 22ch; margin-bottom: 20px;
+  }
+  .jd-section h2 em { font-style: italic; color: var(--rose); }
+  .jd-section .sec-lead {
+    font-family: var(--ff-serif);
+    font-size: clamp(17px, 1.3vw, 20px);
+    font-style: italic; font-weight: 300;
+    max-width: 60ch; line-height: 1.5;
+    color: #444;
+    margin-bottom: 48px;
+  }
+
+  /* ---------- How it works ---------- */
+  .jd-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(0,0,0,.08);
+    border: 1px solid rgba(0,0,0,.08);
+  }
+  .jd-step {
+    background: #fff;
+    padding: 32px 28px 36px;
+    position: relative;
+  }
+  .jd-step .step-num {
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.18em; color: var(--rose);
+    margin-bottom: 16px;
+  }
+  .jd-step h3 {
+    font-family: var(--ff-serif);
+    font-size: 24px; font-weight: 400;
+    line-height: 1.15; margin-bottom: 12px;
+    letter-spacing: -0.015em;
+  }
+  .jd-step p {
+    font-size: 14.5px; line-height: 1.55; color: #555;
+  }
+
+  /* ---------- Sessions ---------- */
+  .jd-sessions {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .jd-session {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.08);
+    padding: 28px 28px 32px;
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .jd-session .s-time {
+    font-family: var(--ff-mono); font-size: 12px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--rose);
+  }
+  .jd-session h3 {
+    font-family: var(--ff-serif);
+    font-size: 26px; font-weight: 400;
+    line-height: 1.15; letter-spacing: -0.015em;
+  }
+  .jd-session h3 em { font-style: italic; color: var(--canopee); }
+  .jd-session .s-meta {
+    font-family: var(--ff-mono); font-size: 11.5px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #888;
+    display: flex; gap: 20px; flex-wrap: wrap;
+  }
+  .jd-session p {
+    font-size: 14.5px; line-height: 1.55; color: #444;
+  }
+  .jd-session .tags {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: auto; padding-top: 8px;
+  }
+  .jd-session .tag {
+    font-family: var(--ff-mono); font-size: 10.5px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--sable-warm); color: var(--canopee-deep);
+    padding: 5px 10px; border-radius: 999px;
+  }
+
+  /* ---------- Employers ---------- */
+  .jd-employers {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(0,0,0,.08);
+    border: 1px solid rgba(0,0,0,.08);
+  }
+  .jd-emp {
+    background: #fff;
+    padding: 22px 22px 24px;
+    min-height: 150px;
+    display: flex; flex-direction: column;
+    gap: 8px;
+  }
+  .jd-emp .e-name {
+    font-family: var(--ff-serif);
+    font-size: 19px; font-weight: 400;
+    line-height: 1.15; letter-spacing: -0.01em;
+  }
+  .jd-emp .e-cat {
+    font-family: var(--ff-mono); font-size: 10.5px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--rose);
+  }
+  .jd-emp .e-count {
+    margin-top: auto;
+    font-family: var(--ff-mono); font-size: 11.5px;
+    color: var(--canopee);
+  }
+  .jd-emp .e-count strong { color: var(--encre); font-weight: 600; }
+
+  /* ---------- CV drop ---------- */
+  .jd-cv {
+    background: var(--canopee); color: var(--ivoire);
+    padding: 72px 0;
+  }
+  .jd-cv .wrap {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 64px; align-items: center;
+  }
+  .jd-cv .sec-eyebrow { color: var(--vert); margin-bottom: 18px; }
+  .jd-cv h2 {
+    font-family: var(--ff-serif);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300; line-height: 1.05;
+    letter-spacing: -0.025em; margin-bottom: 20px;
+  }
+  .jd-cv h2 em { font-style: italic; color: var(--vert); }
+  .jd-cv p {
+    font-family: var(--ff-serif);
+    font-size: 18px; font-style: italic;
+    font-weight: 300; line-height: 1.5;
+    opacity: .92; margin-bottom: 28px;
+    max-width: 48ch;
+  }
+  .jd-cv-form {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.18);
+    padding: 32px;
+  }
+  .jd-cv-form label {
+    display: block;
+    font-family: var(--ff-mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--vert); margin-bottom: 8px;
+  }
+  .jd-cv-form input, .jd-cv-form select {
+    width: 100%;
+    background: transparent;
+    border: none; border-bottom: 1px solid rgba(255,255,255,.25);
+    color: var(--ivoire); padding: 10px 0;
+    font-family: var(--ff-sans); font-size: 15px;
+    margin-bottom: 22px;
+    transition: border-color .2s;
+  }
+  .jd-cv-form input:focus, .jd-cv-form select:focus {
+    outline: none; border-bottom-color: var(--vert);
+  }
+  .jd-cv-form select option { color: var(--encre); }
+  .jd-cv-form .file-field {
+    border: 1px dashed rgba(255,255,255,.3);
+    padding: 20px; text-align: center;
+    font-family: var(--ff-mono); font-size: 12px;
+    letter-spacing: 0.08em; color: rgba(255,255,255,.6);
+    margin-bottom: 24px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .jd-cv-form .file-field:hover {
+    border-color: var(--vert); color: var(--vert);
+  }
+  .jd-cv-form button {
+    width: 100%;
+    background: var(--vert); color: var(--canopee-deep);
+    border: none;
+    font-family: var(--ff-mono); font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 600;
+    padding: 16px; cursor: pointer;
+    transition: all .2s;
+  }
+  .jd-cv-form button:hover {
+    background: #fff; color: var(--canopee-deep);
+  }
+
+  /* ---------- FAQ strip ---------- */
+  .jd-faq { padding: 72px 0; }
+  .jd-faq-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .jd-faq-item h4 {
+    font-family: var(--ff-serif);
+    font-size: 20px; font-weight: 400;
+    line-height: 1.2; margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .jd-faq-item p {
+    font-size: 14.5px; line-height: 1.55; color: #555;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px) {
+    .jd-stats { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .jd-steps { grid-template-columns: 1fr 1fr; }
+    .jd-sessions { grid-template-columns: 1fr; }
+    .jd-employers { grid-template-columns: 1fr 1fr; }
+    .jd-cv .wrap { grid-template-columns: 1fr; gap: 32px; }
+    .jd-faq-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+  @media (max-width: 620px) {
+    .jd-steps { grid-template-columns: 1fr; }
+    .jd-employers { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body data-screen-label="Job Dating">
+
+<div id="nav-mount"></div>
+
+<!-- HERO -->
+<section class="jd-hero">
+  <div class="wrap">
+    <div class="crumb">Valora 2027 · Job Dating</div>
+    <h1><em>120 emplois</em> verts<br/>à pourvoir en <em>2 jours</em>.</h1>
+    <div class="lead">
+      Le vendredi 14 mai, le Village se transforme en bourse de l'emploi vert.
+      Recruteurs, porteurs de projet et candidats se rencontrent en face-à-face,
+      sans CV-thèque ni plateforme : juste une conversation de 20 minutes qui
+      peut tout changer.
+    </div>
+    <div class="jd-stats">
+      <div class="jd-stat">
+        <div class="num"><em>120</em></div>
+        <div class="lbl">Postes à pourvoir</div>
+      </div>
+      <div class="jd-stat">
+        <div class="num">42</div>
+        <div class="lbl">Employeurs présents</div>
+      </div>
+      <div class="jd-stat">
+        <div class="num">8h</div>
+        <div class="lbl">De rencontres</div>
+      </div>
+      <div class="jd-stat">
+        <div class="num"><em>0€</em></div>
+        <div class="lbl">Pour les candidats</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- META BAR -->
+<div class="jd-meta">
+  <div class="wrap">
+    <div><span class="dot"></span>Vendredi 14 mai · 10h00 — 18h00</div>
+    <div>Parc Aquabulles, Lamentin · Halle centrale</div>
+    <div>Inscription gratuite · <a href="#cv">Déposer mon CV →</a></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="jd-section">
+  <div class="wrap">
+    <div class="sec-eyebrow">Comment ça marche</div>
+    <h2>Quatre étapes, <em>zéro friction</em>.</h2>
+    <div class="sec-lead">
+      Pas de stand à tenir, pas de queue interminable. Vous choisissez vos
+      créneaux à l'avance, vous arrivez, vous échangez.
+    </div>
+    <div class="jd-steps">
+      <div class="jd-step">
+        <div class="step-num">01</div>
+        <h3>Je dépose mon CV</h3>
+        <p>Formulaire court ci-dessous. Vous précisez vos pôles d'intérêt et votre disponibilité.</p>
+      </div>
+      <div class="jd-step">
+        <div class="step-num">02</div>
+        <h3>Je reçois mon planning</h3>
+        <p>48h avant l'événement, 3 à 6 créneaux de 20 min. avec des employeurs qui correspondent.</p>
+      </div>
+      <div class="jd-step">
+        <div class="step-num">03</div>
+        <h3>Je viens au village</h3>
+        <p>Accueil dédié à l'entrée, badge candidat, accès libre à toutes les conférences et pôles.</p>
+      </div>
+      <div class="jd-step">
+        <div class="step-num">04</div>
+        <h3>Je rencontre, je repars</h3>
+        <p>Échanges directs. Les employeurs rappellent sous 15 jours. Suivi par l'équipe 3ED.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSIONS -->
+<section class="jd-section sable">
+  <div class="wrap">
+    <div class="sec-eyebrow">Les sessions · Vendredi 14 mai</div>
+    <h2>Quatre temps forts, <em>un seul lieu</em>.</h2>
+    <div class="sec-lead">
+      Les sessions s'enchaînent dans la halle centrale. Chaque candidat peut
+      participer à plusieurs, selon son planning et ses pôles d'intérêt.
+    </div>
+    <div class="jd-sessions">
+      <div class="jd-session">
+        <div class="s-time">10h00 → 12h00 · Session 1</div>
+        <h3>Énergies <em>renouvelables</em> & réseaux</h3>
+        <div class="s-meta">
+          <span>38 postes</span><span>14 employeurs</span><span>Techniciens · Ingénieurs</span>
+        </div>
+        <p>Installateurs solaires, opérateurs de réseau, bureaux d'études thermiques, bioclimatique. Niveau Bac pro à Bac+5.</p>
+        <div class="tags">
+          <span class="tag">Énergie</span><span class="tag">Bâtiment</span><span class="tag">Réseaux</span>
+        </div>
+      </div>
+      <div class="jd-session">
+        <div class="s-time">12h30 → 14h30 · Session 2</div>
+        <h3>Agriculture & <em>alimentation</em></h3>
+        <div class="s-meta">
+          <span>27 postes</span><span>11 employeurs</span><span>Terrain · Transformation</span>
+        </div>
+        <p>Coopératives agricoles, maraîchage bio, aquaponie, transformation alimentaire locale. Du saisonnier au cadre.</p>
+        <div class="tags">
+          <span class="tag">Agriculture</span><span class="tag">Alimentation</span><span class="tag">Coopératives</span>
+        </div>
+      </div>
+      <div class="jd-session">
+        <div class="s-time">14h30 → 16h30 · Session 3</div>
+        <h3>Mobilité & <em>économie circulaire</em></h3>
+        <div class="s-meta">
+          <span>32 postes</span><span>10 employeurs</span><span>Logistique · Tri · Réemploi</span>
+        </div>
+        <p>Opérateurs de tri, ressourceries, mobilité douce, logistique dernier kilomètre, récupération des déchets BTP.</p>
+        <div class="tags">
+          <span class="tag">Déchets</span><span class="tag">Mobilité</span><span class="tag">Réemploi</span>
+        </div>
+      </div>
+      <div class="jd-session">
+        <div class="s-time">16h30 → 18h00 · Session 4</div>
+        <h3>Eau, <em>biodiversité</em> & territoires</h3>
+        <div class="s-meta">
+          <span>23 postes</span><span>7 employeurs</span><span>Terrain · Médiation</span>
+        </div>
+        <p>Gestionnaires de bassin, médiateurs environnement, animateurs nature, chargés de mission collectivités.</p>
+        <div class="tags">
+          <span class="tag">Eau</span><span class="tag">Biodiversité</span><span class="tag">Collectivités</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMPLOYERS -->
+<section class="jd-section">
+  <div class="wrap">
+    <div class="sec-eyebrow">Les employeurs présents</div>
+    <h2>42 structures, <em>de la TPE</em> à l'opérateur public.</h2>
+    <div class="sec-lead">
+      Une sélection représentative. La liste complète et les fiches de poste
+      détaillées sont envoyées aux candidats inscrits 7 jours avant l'événement.
+    </div>
+    <div class="jd-employers">
+      <div class="jd-emp"><div class="e-cat">Énergie</div><div class="e-name">EDF Archipel Guadeloupe</div><div class="e-count"><strong>12</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Énergie</div><div class="e-name">Albioma Caraïbes</div><div class="e-count"><strong>6</strong> postes · CDI / Alternance</div></div>
+      <div class="jd-emp"><div class="e-cat">Énergie</div><div class="e-name">Voltalia Antilles</div><div class="e-count"><strong>8</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Énergie</div><div class="e-name">Sowalis Solaire</div><div class="e-count"><strong>5</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Bâtiment</div><div class="e-name">SIMAR</div><div class="e-count"><strong>9</strong> postes · CDI / Apprentissage</div></div>
+      <div class="jd-emp"><div class="e-cat">Bâtiment</div><div class="e-name">Nexity Antilles</div><div class="e-count"><strong>4</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Agriculture</div><div class="e-name">Coopérative SOCOPMA</div><div class="e-count"><strong>7</strong> postes · CDI / Saisonnier</div></div>
+      <div class="jd-emp"><div class="e-cat">Agriculture</div><div class="e-name">BANAMART</div><div class="e-count"><strong>5</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Agriculture</div><div class="e-name">Karibio</div><div class="e-count"><strong>3</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Alimentation</div><div class="e-name">Denel</div><div class="e-count"><strong>4</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Déchets</div><div class="e-name">CITEO Antilles</div><div class="e-count"><strong>6</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Déchets</div><div class="e-name">Ressourcerie Ti Karib</div><div class="e-count"><strong>3</strong> postes · CDI / Insertion</div></div>
+      <div class="jd-emp"><div class="e-cat">Mobilité</div><div class="e-name">CACEM — Mobilité</div><div class="e-count"><strong>5</strong> postes · Contractuel</div></div>
+      <div class="jd-emp"><div class="e-cat">Mobilité</div><div class="e-name">Karulis (vélos partagés)</div><div class="e-count"><strong>4</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">Eau</div><div class="e-name">SMDS Martinique</div><div class="e-count"><strong>6</strong> postes · Contractuel</div></div>
+      <div class="jd-emp"><div class="e-cat">Biodiversité</div><div class="e-name">PNRM — Parc régional</div><div class="e-count"><strong>4</strong> postes · Contractuel</div></div>
+      <div class="jd-emp"><div class="e-cat">Collectivités</div><div class="e-name">CTM — Direction Environnement</div><div class="e-count"><strong>8</strong> postes · Contractuel</div></div>
+      <div class="jd-emp"><div class="e-cat">Formation</div><div class="e-name">AFPA Lamentin</div><div class="e-count"><strong>3</strong> formateurs</div></div>
+      <div class="jd-emp"><div class="e-cat">ESS</div><div class="e-name">URIOPSS Antilles</div><div class="e-count"><strong>5</strong> postes · CDI</div></div>
+      <div class="jd-emp"><div class="e-cat">ESS</div><div class="e-name">Les Jardins de Bellevue</div><div class="e-count"><strong>3</strong> postes · Insertion</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CV DROP -->
+<section class="jd-cv" id="cv">
+  <div class="wrap">
+    <div>
+      <div class="sec-eyebrow">Candidats · C'est ici</div>
+      <h2>Déposez votre CV <em>en 90 secondes</em>.</h2>
+      <p>
+        Pas de lettre de motivation, pas de questionnaire interminable. On a
+        besoin de savoir qui vous êtes, ce qui vous intéresse, quand vous êtes
+        disponible. Le reste se passe en vrai, le 14 mai.
+      </p>
+      <p style="font-family: var(--ff-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-style: normal; opacity: .7;">
+        Clôture des inscriptions · 7 mai 2027 · 23h59
+      </p>
+    </div>
+    <form class="jd-cv-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓ CV reçu — on revient vers vous sous 48h';">
+      <label>Prénom & nom</label>
+      <input type="text" required placeholder="Marie Dupont" />
+      <label>Email</label>
+      <input type="email" required placeholder="marie@exemple.com" />
+      <label>Téléphone</label>
+      <input type="tel" placeholder="+596 ..." />
+      <label>Pôle(s) d'intérêt principal</label>
+      <select required>
+        <option value="">— Choisir —</option>
+        <option>Énergie</option>
+        <option>Bâtiment & construction</option>
+        <option>Agriculture & alimentation</option>
+        <option>Déchets & économie circulaire</option>
+        <option>Mobilité</option>
+        <option>Eau & biodiversité</option>
+        <option>ESS & collectivités</option>
+        <option>Je ne sais pas encore</option>
+      </select>
+      <label>CV (PDF, 3 Mo max.)</label>
+      <div class="file-field">Glissez votre CV ici · ou cliquez pour parcourir</div>
+      <button type="submit">Envoyer ma candidature →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="jd-faq">
+  <div class="wrap">
+    <div class="sec-eyebrow" style="color: var(--rose);">Questions fréquentes</div>
+    <h2 style="font-family: var(--ff-serif); font-size: clamp(28px, 3vw, 40px); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 40px;">À savoir avant de venir.</h2>
+    <div class="jd-faq-grid">
+      <div class="jd-faq-item">
+        <h4>C'est vraiment gratuit ?</h4>
+        <p>Oui. Entrée libre pour les candidats, inscription aux sessions sans frais. Les employeurs financent l'événement via leur participation au village.</p>
+      </div>
+      <div class="jd-faq-item">
+        <h4>Je n'ai pas d'expérience dans le vert.</h4>
+        <p>Aucun problème. Une moitié des postes sont ouverts en reconversion ou en alternance. Beaucoup d'employeurs cherchent la motivation avant le CV.</p>
+      </div>
+      <div class="jd-faq-item">
+        <h4>Je suis hors Martinique.</h4>
+        <p>Les 42 structures recrutent principalement sur l'archipel. Certaines ont des antennes Guadeloupe, Guyane, Saint-Martin. Précisez-le sur votre CV.</p>
+      </div>
+      <div class="jd-faq-item">
+        <h4>Combien de rencontres ?</h4>
+        <p>3 à 6 créneaux de 20 min. par candidat, selon vos pôles et la demande des employeurs. L'algorithme de matching est géré par l'équipe 3ED.</p>
+      </div>
+      <div class="jd-faq-item">
+        <h4>Et les stages / alternances ?</h4>
+        <p>Sur les 120 postes, ~25 sont en alternance ou stage long. Ils sont identifiés clairement dans les fiches envoyées avant l'événement.</p>
+      </div>
+      <div class="jd-faq-item">
+        <h4>Je peux venir sans m'inscrire ?</h4>
+        <p>Le village est ouvert à tous. Mais sans inscription préalable, pas de créneau garanti avec les employeurs — vous passerez en file d'attente libre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">VALORA</div>
+        <div class="footer-sig">Le Village du développement durable et de l'économie <em>sociale et solidaire.</em></div>
+        <div class="footer-tag">Édition 2027 · Cap Caraïbe · 13-14 mai · Parc Aquabulles, Lamentin</div>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Le village</div>
+        <a href="edition-2027.html">Édition 2027</a>
+        <a href="poles.html">Les 12 pôles</a>
+        <a href="conferences.html">Conférences</a>
+        <a href="caraibe.html">Cap Caraïbe</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Participer</div>
+        <a href="pre-inscription.html">Je viens visiter</a>
+        <a href="pre-inscription.html#exposer">Je veux exposer</a>
+        <a href="job-dating.html">Job Dating</a>
+        <a href="kit-media.html">Kit média</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-title">Association 3ED</div>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="mag.html">martinique2050.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2027 · Association 3ED · Valora</div>
+      <div class="footer-place">Lamentin, Martinique · FWI</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/valora-shared.js?v=3"></script>
+<script src="assets/valora-nav.js?v=3"></script>
+</body>
+</html>
