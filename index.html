@@ -122,28 +122,29 @@
   /* Manifesto strip over hero — replaces the old "Valorisons ensemble" bubble */
   .hero-manifesto-wrap {
     position: absolute; z-index: 3;
-    bottom: 36px; left: 50%;
-    transform: translateX(-50%);
+    bottom: 28px; left: 16px; right: 16px;
     display: flex; flex-direction: column; align-items: center;
     gap: 10px;
-    max-width: calc(100% - 48px);
+    pointer-events: none;
   }
   .hero-manifesto {
     display: flex; align-items: center; justify-content: center;
-    gap: clamp(14px, 2.2vw, 32px);
-    padding: 14px 32px;
+    gap: clamp(10px, 1.6vw, 28px);
+    padding: 12px clamp(18px, 2.4vw, 32px);
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 999px;
     box-shadow: 0 20px 60px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.6) inset;
     font-family: var(--ff-serif);
-    font-size: clamp(20px, 2.6vw, 38px);
+    font-size: clamp(16px, 2.2vw, 30px);
     font-weight: 500;
     line-height: 1;
     letter-spacing: -0.02em;
-    white-space: nowrap;
+    flex-wrap: wrap;
+    max-width: 100%;
     color: var(--encre);
+    pointer-events: auto;
   }
   .hero-manifesto-tag {
     font-family: var(--ff-mono);
@@ -195,20 +196,22 @@
     flex-shrink: 0;
     align-self: center;
   }
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     .hero-manifesto-wrap {
-      bottom: auto; top: calc(100% + 16px);
-      position: relative; left: auto; transform: none;
-      margin: 16px auto 0;
+      position: static;
+      margin: 20px 16px 8px;
     }
     .hero-manifesto {
       white-space: normal; text-align: center;
       flex-wrap: wrap; justify-content: center;
       padding: 12px 18px;
-      font-size: 16px;
+      font-size: 15px;
+      gap: 8px;
     }
     .hero-manifesto .hm-dot { width: 5px; height: 5px; }
-  } text-transform: uppercase;}
+    .hero-manifesto-tag { font-size: 11px; }
+    .hero-manifesto-tag em { font-size: 13px; }
+  }
 
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; min-height: auto; }
